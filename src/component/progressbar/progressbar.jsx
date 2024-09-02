@@ -1,31 +1,27 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 
 import "./progressbar.scss";
 
-export function ProgressBar() {
-  const steps = [
-    "Contact Info",
-    "Work History",
-    "Education",
-    "Skill",
-    "Summary",
-  ];
-  const [currentStep, setCurrentStep] = useState(1);
+export function ProgressBar({ array, currentStep }) {
+  const steps = array;
+  // const [currentStep, setCurrentStep] = useState(0);
   const [complete, setComplete] = useState(false);
+  console.log(currentStep);
 
   return (
-    <>
-      <div className="progress-bar bg-indigo-800 py-4 md:py-3">
-        <div className="grid grid-flow-col justify-center  gap-2 md:gap-0">
+    <div className="progress-bar bg-indigo-800 md:bg-white">
+      <div className="max-w-7xl mx-auto w-full px-4 md:px-6 lg:px-8 py-4 md:py-3">
+        <div className="grid grid-flow-col w-full justify-center  gap-2 md:gap-0">
           {steps?.map((step, i) => (
             <div
               key={i}
-              className={`step-item ${currentStep === i + 1 && "active"} ${
-                (i + 1 < currentStep || complete) && "complete"
+              className={`step-item ${currentStep === i && "active"} ${
+                (i < currentStep || complete) && "complete"
               }`}
             >
               <div className="step">
-                {i + 1 < currentStep || complete ? (
+                {i < currentStep || complete ? (
                   <i className="bi bi-check text-lg text-amber-950"></i>
                 ) : (
                   i + 1
@@ -38,14 +34,16 @@ export function ProgressBar() {
         <div className="mobileDisplay md:hidden mt-4">
           <p className="text-center text-white font-semibold">
             {" "}
-            {steps[currentStep] ? steps[currentStep] : "Finalize"}
+            {steps[currentStep] || steps[currentStep] === 0
+              ? steps[currentStep]
+              : "Finalize"}
           </p>
         </div>
       </div>
 
       <button
         className="btn"
-        disabled={currentStep === 1}
+        disabled={currentStep === 0}
         onClick={() => {
           setComplete(false);
           setCurrentStep((prev) => prev - 1);
@@ -63,6 +61,6 @@ export function ProgressBar() {
       >
         {currentStep === steps.length ? "Finalize" : "Next"}
       </button>
-    </>
+    </div>
   );
 }

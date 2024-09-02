@@ -13,8 +13,13 @@
   margin-block: 0.25em;
 }
 
-.active .step {
-  @apply border border-amber-600 bg-amber-50 text-amber-700;
+.active {
+  .step {
+    @apply border border-amber-600 bg-amber-50 text-amber-700;
+  }
+  p {
+    @apply text-amber-700 font-semibold;
+  }
 }
 
 .complete .step {
