@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { ProgressBar } from "../progressbar/progressbar";
 import { ContactInfo } from "./ContactInfo";
-import { WorkHistory } from "./WorkHistory";
 import { Education } from "./Education";
+import { WorkHistory } from "./Work";
 import { Skill } from "./skill";
 import { Summary } from "./summary";
 
