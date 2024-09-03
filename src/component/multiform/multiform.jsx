@@ -32,7 +32,7 @@ export function MultiForm() {
   //   const [loading, setLoading] = useState(false);
 
   let formSteps = [
-    "Contact Info",
+    "Contact Infos",
     "Work History",
     "Education",
     "Skill",
