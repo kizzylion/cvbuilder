@@ -6,7 +6,7 @@ import { ProgressBar } from "./component/progressbar/progressbar";
 import { MultiForm } from "./component/multiform/multiform";
 export default function App() {
   return (
-    <div className="App">
+    <div className="App bg-gray-50">
       <Header />
       <MultiForm />
     </div>

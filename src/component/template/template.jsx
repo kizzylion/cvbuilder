@@ -13,7 +13,7 @@ export default function TemplatePaper() {
     const scaleFactor = parentWidth / childWidth;
 
     // Apply the scale transformation
-    childRef.current.style.transform = `scale(${scaleFactor}, 1)`; // Scale only horizontally
+    childRef.current.style.transform = `scale(${scaleFactor})`; // Scale only horizontally
     childRef.current.style.transformOrigin = "left"; // Optional: Set the origin to left
   };
 
@@ -30,11 +30,11 @@ export default function TemplatePaper() {
     };
   }, []);
   return (
-    <div className="docParent" ref={parentRef}>
+    <div className="docParent  items-start w-full h-full" ref={parentRef}>
       <div
         id="previewPaper"
         ref={childRef}
-        className="grid grid-cols-[1fr_3fr] leading-normal mx-auto bg-indigo-50 object-contain"
+        className="grid grid-cols-[1fr_3fr] leading-normal mx-auto bg-indigo-50 mb-auto"
       >
         <div
           id="paperAside"
