@@ -17,7 +17,6 @@ export default function TemplatePaper() {
     // childRef.current.style.transformOrigin = "center top"; // Optional: Set the origin to left
 
     childRef.current.style.fontSize = `${(childWidth * 12) / 595}px`;
-    console.log(childRef.current.style.fontSize);
   };
 
   useEffect(() => {
