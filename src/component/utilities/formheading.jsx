@@ -9,9 +9,9 @@ export function FormHeading({ title, subtitle, instruction }) {
         preIcon={<i className="bi bi-arrow-left "></i>}
         //   postIcon={<i className="bi bi-arrow-left-short"></i>}
       />
-      <div className="title_subtitle gap-3 flex flex-col">
+      <div className="title_subtitle gap-1 lg:gap-2 flex flex-col max-w-3xl">
         <h2
-          className={`lg:text-4xl font-normal text-gray-950 ${
+          className={`text-2xl md:text-4xl lg:text-4xl font-semibold text-gray-950 ${
             title ? "block" : "hidden"
           }`}
         >

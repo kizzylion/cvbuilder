@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 
 import "./progressbar.scss";
@@ -10,7 +9,7 @@ export function ProgressBar({ array, currentStep }) {
   console.log(currentStep);
 
   return (
-    <div className="progress-bar bg-indigo-800 md:bg-white">
+    <div className="progress-bar bg-indigo-900 md:bg-white">
       <div className="max-w-7xl mx-auto w-full px-4 md:px-6 lg:px-8 py-4 md:py-3">
         <div className="grid grid-flow-col w-full justify-center  gap-2 md:gap-0">
           {steps?.map((step, i) => (
@@ -41,7 +40,7 @@ export function ProgressBar({ array, currentStep }) {
         </div>
       </div>
 
-      <button
+      {/* <button
         className="btn"
         disabled={currentStep === 0}
         onClick={() => {
@@ -60,7 +59,7 @@ export function ProgressBar({ array, currentStep }) {
         }}
       >
         {currentStep === steps.length ? "Finalize" : "Next"}
-      </button>
+      </button> */}
     </div>
   );
 }
