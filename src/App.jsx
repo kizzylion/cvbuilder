@@ -37,7 +37,7 @@ export default function App() {
   };
 
   return (
-    <div className="App bg-gray-50 h-full">
+    <div className={`App bg-gray-50 flex flex-col h-full `}>
       <Header ref={headerRef} />
       <main
         id="library"
@@ -84,7 +84,7 @@ export default function App() {
         </div>
       </main>
       <div
-        className={`${!openMultiForm && "hidden"}`}
+        className={`bg-gray-50 ${!openMultiForm ? " hidden" : " "} `}
         style={{ paddingTop: `${headerHeight}px` }}
       >
         <MultiForm isOpen={openMultiForm} closeMultiform={handleMultiForm} />

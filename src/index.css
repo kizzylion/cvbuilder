@@ -19,8 +19,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 #root {
-  height: 90vh;
-  height: 90dvh;
+  height: 100vh;
+  height: 100dvh;
 }
 
 a {

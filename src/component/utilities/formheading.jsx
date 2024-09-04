@@ -1,6 +1,6 @@
 import { Button } from "./button";
 
-export function FormHeading({ title, subtitle, instruction, closeMultiform }) {
+export function FormHeading({ title, subtitle, instruction, handleBack }) {
   return (
     <div className="form_heading flex flex-col gap-4 mb-5">
       <Button
@@ -8,7 +8,7 @@ export function FormHeading({ title, subtitle, instruction, closeMultiform }) {
         label={"Go back"}
         preIcon={<i className="bi bi-arrow-left "></i>}
         //   postIcon={<i className="bi bi-arrow-left-short"></i>}
-        onClick={closeMultiform}
+        onClick={handleBack}
       />
       <div className="title_subtitle gap-1 lg:gap-2 flex flex-col max-w-3xl">
         <h2

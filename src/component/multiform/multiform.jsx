@@ -64,7 +64,7 @@ export function MultiForm({ isOpen, closeMultiform }) {
           />
         );
       case 1:
-        return <WorkHistory />;
+        return <WorkHistory handleBack={handleBack} handleNext={handleNext} />;
       case 2:
         return <Education />;
       case 3:
@@ -77,7 +77,7 @@ export function MultiForm({ isOpen, closeMultiform }) {
   }
 
   return (
-    <section className={`${!isOpen && "hidden"}`}>
+    <section>
       <ProgressBar array={formSteps} currentStep={currentStep} />
       <div
         id="Forms"

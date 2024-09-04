@@ -34,8 +34,8 @@ export default function TemplatePaper({ isOpen }) {
   }, []);
   return (
     <div
-      className={`docParent items-start aspect-[8.5/11] transition-opacity duration-500 ease-in-out  w-full h-full ${
-        isOpen && scaleToFitParent()
+      className={`docParent items-start aspect-[8.5/11]  w-full h-full ${
+        isOpen ? setTimeout(scaleToFitParent, 500) : " "
       }  ease-out `}
       ref={parentRef}
     >

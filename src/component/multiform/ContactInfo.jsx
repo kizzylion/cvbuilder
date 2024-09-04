@@ -13,7 +13,7 @@ export function ContactInfo({ isOpen, closeMultiform, handleNext }) {
             title={"What's the best way for employers to contact you?"}
             subtitle={"We suggest including an email and phone number."}
             instruction={true}
-            closeMultiform={closeMultiform}
+            handleBack={closeMultiform}
           />
           <form action="#">
             <div className="grid grid-cols-2 gap-5 lg:gap-6">

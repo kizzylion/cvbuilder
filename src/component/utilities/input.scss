@@ -10,3 +10,48 @@ input[type="tel"] {
     @apply bg-transparent border-indigo-600  ring-1 ring-indigo-500;
   }
 }
+
+/* Reset browser-specific styles */
+input[type="month"] {
+  -webkit-appearance: none; /* Removes default styling in Safari */
+  -moz-appearance: none; /* Removes default styling in Firefox */
+  appearance: none; /* Removes default styling in Chrome */
+  background-color: transparent; /* Ensures a consistent background */
+  border: 1px solid; /* Default border */
+  padding: 8px 12px; /* Adds padding for a consistent look */
+  font-family: inherit; /* Consistent font */
+  font-size: 16px; /* Consistent font size */
+  color: #333; /* Text color */
+  border-radius: 4px; /* Rounded corners */
+  outline: none; /* Removes outline when focused */
+  width: 100%; /* Full width */
+  box-sizing: border-box; /* Ensures padding and borders are included in width */
+  text-align: left !important; /* Align text to the left */
+  /* Hide the native calendar icon */
+  background-image: none;
+
+  /* Add a custom calendar icon as a background */
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-calendar-event" viewBox="0 0 16 16"%3E%3Cpath d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/%3E%3Cpath d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 20px 20px; /* Adjust icon size */
+
+  @apply border border-gray-400;
+}
+
+/* Add hover and focus states for better user experience */
+input[type="month"]:hover {
+  @apply bg-transparent border-indigo-600  ring-1 ring-indigo-500; /* Change border color on hover */
+}
+
+input[type="month"]:focus {
+  border-color: #007bff; /* Focus border color */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Focus shadow */
+}
+
+/* Styling for disabled state */
+input[type="month"]:disabled {
+  background-color: #f5f5f5; /* Greyed-out background */
+  color: #999; /* Lighter text color */
+  cursor: not-allowed; /* Disabled cursor */
+}
