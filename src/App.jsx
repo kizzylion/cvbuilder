@@ -9,6 +9,8 @@ export default function App() {
   const headerRef = document.getElementById("Logo-header");
   const [headerHeight, setHeaderHeight] = useState(0);
 
+  const [openMultiForm, setOpenMultiForm] = useState(false);
+
   function calculateHeaderHeight() {
     const headerRef = document.getElementById("Logo-header");
     if (headerRef) {
@@ -30,13 +32,23 @@ export default function App() {
     };
   }, []);
 
+  const handleMultiForm = () => {
+    setOpenMultiForm((openMultiForm) => !openMultiForm);
+  };
+
   return (
     <div className="App bg-gray-50 h-full">
       <Header ref={headerRef} />
-      <div className="bg-white" style={{ paddingTop: `${headerHeight}px` }}>
-        <FilterSection />
-      </div>
-      <main id="library" className="bg-white">
+      <main
+        id="library"
+        className={`bg-white h-full ${openMultiForm && "hidden"}`}
+      >
+        <div className="bg-white" style={{ paddingTop: `${headerHeight}px` }}>
+          <FilterSection
+            isOpen={!openMultiForm}
+            handleMultiForm={handleMultiForm}
+          />
+        </div>
         <div className="max-w-7xl mx-auto w-full flex flex-col px-4 md:px-6 lg:px-8 py-5 ">
           <div className="hidden md:flex justify-between mb-1 gap-4 w-full h-fit font-semibold uppercase text-base text-900 pl-8 py-3">
             <div className="flex w-full gap-4 ">
@@ -71,13 +83,16 @@ export default function App() {
           </div>
         </div>
       </main>
-
-      <div style={{ paddingTop: `${headerHeight}px` }}>
-        <MultiForm />
+      <div
+        className={`${!openMultiForm && "hidden"}`}
+        style={{ paddingTop: `${headerHeight}px` }}
+      >
+        <MultiForm isOpen={openMultiForm} closeMultiform={handleMultiForm} />
       </div>
-      <footer>
+
+      <footer className="bg-white">
         <div className="max-w-7xl mx-auto w-full flex flex-col md:flex-row md:justify-between px-4 md:px-6 lg:px-8 py-5 gap-3">
-          <div className="socials flex text-2xl text-gray-900 gap-6 w-fit">
+          <div className="socials flex text-xl text-gray-900 gap-6 w-fit">
             <a href="mailto:kztchm@gmail.com">
               <i className="bi bi-envelope-fill"></i>
             </a>

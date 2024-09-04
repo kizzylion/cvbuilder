@@ -6,7 +6,7 @@ import { WorkHistory } from "./Work";
 import { Skill } from "./skill";
 import { Summary } from "./summary";
 
-export function MultiForm() {
+export function MultiForm({ isOpen, closeMultiform }) {
   //   const [form1, setForm1] = useState({
   //     name: "",
   //     email: "",
@@ -41,10 +41,28 @@ export function MultiForm() {
 
   const [currentStep, setCurrentStep] = useState(0);
 
+  function handleNext() {
+    currentStep === formSteps.length
+      ? console.log("completed")
+      : setCurrentStep((prev) => prev + 1);
+  }
+
+  function handleBack() {
+    // setComplete(false);
+
+    setCurrentStep((prev) => prev - 1);
+  }
+
   function displayActiveForm(currentStep) {
     switch (currentStep) {
       case 0:
-        return <ContactInfo />;
+        return (
+          <ContactInfo
+            isOpen={isOpen}
+            closeMultiform={closeMultiform}
+            handleNext={handleNext}
+          />
+        );
       case 1:
         return <WorkHistory />;
       case 2:
@@ -59,7 +77,7 @@ export function MultiForm() {
   }
 
   return (
-    <section>
+    <section className={`${!isOpen && "hidden"}`}>
       <ProgressBar array={formSteps} currentStep={currentStep} />
       <div
         id="Forms"

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import "./template.scss";
 
-export default function TemplatePaper() {
+export default function TemplatePaper({ isOpen }) {
   const parentRef = useRef(null);
   const childRef = useRef(null);
 
@@ -17,6 +17,7 @@ export default function TemplatePaper() {
     // childRef.current.style.transformOrigin = "center top"; // Optional: Set the origin to left
 
     childRef.current.style.fontSize = `${(childWidth * 12) / 595}px`;
+    return true;
   };
 
   useEffect(() => {
@@ -33,7 +34,9 @@ export default function TemplatePaper() {
   }, []);
   return (
     <div
-      className="docParent  items-start aspect-[8.5/11]  w-full h-full"
+      className={`docParent items-start aspect-[8.5/11] transition-opacity duration-500 ease-in-out  w-full h-full ${
+        isOpen && scaleToFitParent()
+      }  ease-out `}
       ref={parentRef}
     >
       <div

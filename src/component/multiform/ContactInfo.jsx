@@ -4,7 +4,7 @@ import "./contactInfo.scss";
 import { Input } from "../utilities/input";
 import { Button } from "../utilities/button";
 
-export function ContactInfo() {
+export function ContactInfo({ isOpen, closeMultiform, handleNext }) {
   return (
     <>
       <div className="contact grid grid-cols-1 lg:grid-cols-[58%_38%] gap-16 mb-5">
@@ -13,6 +13,7 @@ export function ContactInfo() {
             title={"What's the best way for employers to contact you?"}
             subtitle={"We suggest including an email and phone number."}
             instruction={true}
+            closeMultiform={closeMultiform}
           />
           <form action="#">
             <div className="grid grid-cols-2 gap-5 lg:gap-6">
@@ -69,7 +70,7 @@ export function ContactInfo() {
         </div>
         <div className="preview_area hidden md:flex justify-center p-5 w-full">
           <div className="preview aspect-[8.5/11] flex md:w-1/3 lg:w-full h-fit border border-gray-500 shadow-md shadow-gray-400 bg-gray-100 overflow-hidden">
-            <TemplatePaper />
+            <TemplatePaper isOpen={isOpen} />
           </div>
         </div>
       </div>
@@ -88,6 +89,7 @@ export function ContactInfo() {
             label={"Next: Work History"}
             preIcon={false}
             postIcon={false}
+            onClick={handleNext}
           />
         </div>
       </footer>
