@@ -10,6 +10,17 @@ input[type="tel"] {
     @apply bg-transparent border-indigo-600  ring-1 ring-indigo-500;
   }
 }
+textarea {
+  @apply bg-transparent border border-gray-400 px-[14px] py-[10px] rounded-md;
+
+  &:hover,
+  :focus-within {
+    @apply bg-transparent border-indigo-600  ring-1 ring-indigo-500;
+  }
+  padding-inline: 14px !important;
+  padding-block: 10px !important;
+  resize: none !important;
+}
 
 /* Reset browser-specific styles */
 input[type="month"] {

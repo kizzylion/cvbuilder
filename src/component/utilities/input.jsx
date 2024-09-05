@@ -45,4 +45,25 @@ export function Input({ label, type, id, placeholder }) {
         />
       </div>
     );
+  if (type === "textarea")
+    return (
+      <div className="input-group flex flex-col w-full h-fit">
+        <label
+          className="form-label uppercase md:capitalize mb-[6px] text-xs text-gray-700 font-medium"
+          htmlFor="firstName"
+        >
+          {label}
+        </label>
+        <textarea
+          className="form-control "
+          type={type}
+          id={id}
+          name={id}
+          value={startDate}
+          onChange={handleChange}
+          rows="4"
+          placeholder={placeholder}
+        ></textarea>
+      </div>
+    );
 }

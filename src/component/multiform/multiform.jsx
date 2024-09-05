@@ -58,7 +58,7 @@ export function MultiForm({ isOpen, closeMultiform }) {
       case 0:
         return (
           <ContactInfo
-            isOpen={isOpen}
+            isOpen={true}
             closeMultiform={closeMultiform}
             handleNext={handleNext}
           />
