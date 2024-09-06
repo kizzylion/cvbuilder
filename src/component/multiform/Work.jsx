@@ -18,7 +18,7 @@ export function WorkHistory({ handleBack, handleNext }) {
   };
 
   return (
-    <div className="flex flex-col h-full justify-between">
+    <div className="flex flex-col h-full justify-between relative">
       <div className={`work grid  grid-cols-1  gap-16 mb-5`}>
         <div
           className={`content-with-array ${
@@ -95,16 +95,49 @@ export function WorkHistory({ handleBack, handleNext }) {
             } work-array w-full lg:w-[58%]`}
           >
             <FormHeading
-              title={"Work History Sumary"}
+              title={"Work History Summary"}
               subtitle={""}
               instruction={false}
               handleBack={handleWorkArray}
             />
-            <div>
+            <div className="grid grid-col-1 gap-4 ">
               <div className="work-list grid grid-col-1 gap-5 lg:gap-6">
-                <ExperienceCard cardTitle={"Work Experience 1"} />
-                <ExperienceCard cardTitle={"Work Experience 2"} />
-                <ExperienceCard cardTitle={"Work Experience 3"} />
+                <ExperienceCard
+                  cardTitle={"Work Experience 1"}
+                  title="Web Developer"
+                  title2="Microsoft"
+                  subtitle1="Lagos, Nigeria"
+                  subtitle2="August 2023 - August 2024"
+                  description="Wrote custom HTML and JavaScript for existing  websites. Developed user interfaces with modern JavaScript frameworks, HTML5, and CSS3.
+Wrote custom HTML and JavaScript for existing  websites. Developed user interfaces with modern JavaScript frameworks, HTML5, and CSS3."
+                />
+                <ExperienceCard
+                  cardTitle={"Work Experience 2"}
+                  title="Web Developer"
+                  title2="Microsoft"
+                  subtitle1="Lagos, Nigeria"
+                  subtitle2="August 2023 - August 2024"
+                  description="Wrote custom HTML and JavaScript for existing  websites. Developed user interfaces with modern JavaScript frameworks, HTML5, and CSS3.
+Wrote custom HTML and JavaScript for existing  websites. Developed user interfaces with modern JavaScript frameworks, HTML5, and CSS3."
+                />
+                <ExperienceCard
+                  cardTitle={"Work Experience 3"}
+                  title="Web Developer"
+                  title2="Microsoft"
+                  subtitle1="Lagos, Nigeria"
+                  subtitle2="August 2023 - August 2024"
+                  description="Wrote custom HTML and JavaScript for existing  websites. Developed user interfaces with modern JavaScript frameworks, HTML5, and CSS3.
+Wrote custom HTML and JavaScript for existing  websites. Developed user interfaces with modern JavaScript frameworks, HTML5, and CSS3."
+                />
+              </div>
+              <div className="justify-self-center">
+                <Button
+                  type={"tertiary"}
+                  label={"Add another position"}
+                  preIcon={<i className="bi bi-plus"></i>}
+                  postIcon={false}
+                  onClick={handleWorkArray}
+                />
               </div>
             </div>
           </div>
@@ -128,7 +161,7 @@ export function WorkHistory({ handleBack, handleNext }) {
           </div>
         </div>
       </div>
-      <div className="work-action-section flex">
+      <div className="work-action-section flex fixed w-full  mx-auto  bottom-0 right-0 px-4 md:px-6 lg:px-8  bg-gray-50 border-t border-gray-300">
         <footer
           className={`work-form-action action-section w-full ${
             openTemplate ? "hidden" : "flex"

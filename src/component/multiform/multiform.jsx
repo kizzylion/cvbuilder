@@ -66,7 +66,7 @@ export function MultiForm({ isOpen, closeMultiform }) {
       case 1:
         return <WorkHistory handleBack={handleBack} handleNext={handleNext} />;
       case 2:
-        return <Education />;
+        return <Education handleBack={handleBack} handleNext={handleNext} />;
       case 3:
         return <Skill />;
       case 4:
@@ -78,7 +78,9 @@ export function MultiForm({ isOpen, closeMultiform }) {
 
   return (
     <section>
-      <ProgressBar array={formSteps} currentStep={currentStep} />
+      <div className="sticky z-40 top-14">
+        <ProgressBar array={formSteps} currentStep={currentStep} />
+      </div>
       <div
         id="Forms"
         className="max-w-7xl mx-auto w-full px-4 md:px-6 lg:px-8 py-5"

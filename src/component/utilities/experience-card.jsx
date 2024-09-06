@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { Button } from "./button";
 
-export function ExperienceCard({ cardTitle }) {
+export function ExperienceCard({
+  cardTitle,
+  title,
+  title2,
+  subtitle1,
+  subtitle2,
+  description,
+}) {
   const [showMore, setShowMore] = useState(false);
 
   const handleShowMore = () => {
@@ -25,11 +32,10 @@ export function ExperienceCard({ cardTitle }) {
       </header>
       <div className="card-body px-4 py-[14px] bg-white">
         <h4 className="text-gray-950 font-medium">
-          <span>Web Developer</span>, <span>Microsoft</span>.
+          <span>{title}</span>, <span>{title2}</span>.
         </h4>
         <p className="text-sm text-gray-500">
-          <span>Lagos, Nigeria</span> - <span>August 2023</span> to{" "}
-          <span>August 2024</span>
+          <span>{subtitle1}</span> - <span>{subtitle2}</span>
         </p>
         {/* Using max-height with a large enough value */}
         <div
@@ -38,17 +44,18 @@ export function ExperienceCard({ cardTitle }) {
           }`}
         >
           <p className="py-1 pl-8 text-sm w-full md:w-3/4 text-gray-600">
-            Wrote custom HTML and JavaScript for existing websites. Developed
-            user interfaces with modern JavaScript frameworks, HTML5, and CSS3.
-            Wrote custom HTML and JavaScript for existing websites. Developed
-            user interfaces with modern JavaScript frameworks, HTML5, and CSS3.
+            {description}
           </p>
         </div>
-        <Button
-          type={"tertiary"}
-          label={showMore ? "Show less" : "Show more"}
-          onClick={handleShowMore}
-        />
+        {description ? (
+          <Button
+            type={"tertiary"}
+            label={showMore ? "Show less" : "Show more"}
+            onClick={handleShowMore}
+          />
+        ) : (
+          " "
+        )}
       </div>
     </div>
   );
