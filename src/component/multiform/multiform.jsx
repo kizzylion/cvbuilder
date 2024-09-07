@@ -12,6 +12,7 @@ export function MultiForm({ closeMultiform }) {
 
   const newResumeData = { contactInfo: contactInfo, workHistory: workHistory };
 
+  let contact = newResumeData.contactInfo;
   let jobs = newResumeData.workHistory;
 
   let formSteps = [
@@ -33,22 +34,28 @@ export function MultiForm({ closeMultiform }) {
       : setCurrentStep((prev) => prev + 1);
   }
 
+  function handleContactChanges(data) {
+    setContactInfo(data);
+  }
   function handleBack() {
     // setComplete(false);
 
     setCurrentStep((prev) => prev - 1);
   }
 
-  function displayActiveForm(currentStep, data, tempJobs) {
+  function displayActiveForm(currentStep, data, tempContact, tempJobs) {
     switch (currentStep) {
       case 0:
         return (
           <ContactInfo
             isOpen={true}
             resumeData={data}
+            contact={tempContact}
             closeMultiform={closeMultiform}
+            handleContactChanges={handleContactChanges}
             handleNext={(data) => {
-              setContactInfo(data);
+              contact = data;
+              setContactInfo(contact);
               handleNext();
             }}
           />
@@ -106,7 +113,7 @@ export function MultiForm({ closeMultiform }) {
         id="Forms"
         className="max-w-7xl mx-auto w-full px-4 md:px-6 lg:px-8 py-5"
       >
-        {displayActiveForm(currentStep, newResumeData, jobs)}
+        {displayActiveForm(currentStep, newResumeData, contact, jobs)}
       </div>
     </section>
   );

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./input.scss";
 
-export function MonthInput({ label, type, id, value, onChange, require }) {
+export function MonthInput({ label, type, id, value, onChange, require, min }) {
   const [startDate, setStartDate] = useState("");
 
   const getCurrentMonth = () => {
@@ -35,7 +35,7 @@ export function MonthInput({ label, type, id, value, onChange, require }) {
           type={type}
           id={id}
           name={id}
-          min={"1970-01"}
+          min={min || "1970-01"}
           value={value}
           onChange={onChange}
           required={require}

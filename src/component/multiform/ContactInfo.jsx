@@ -3,35 +3,33 @@ import TemplatePaper from "../template/template";
 import "./contactInfo.scss";
 import { Input } from "../utilities/input";
 import { Button } from "../utilities/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export function ContactInfo({
   isOpen,
   closeMultiform,
   handleNext,
   resumeData,
+  contact,
+  handleContactChanges,
 }) {
   const [firstName, setFirstName] = useState(
-    resumeData.contactInfo.firstName ? resumeData.contactInfo.firstName : ""
+    contact.firstName ? contact.firstName : ""
   );
   const [lastName, setLastName] = useState(
-    resumeData.contactInfo.lastName ? resumeData.contactInfo.lastName : ""
+    contact.lastName ? contact.lastName : ""
   );
   const [profession, setProfession] = useState(
-    resumeData.contactInfo.profession ? resumeData.contactInfo.profession : ""
+    contact.profession ? contact.profession : ""
   );
   const [location, setLocation] = useState(
-    resumeData.contactInfo.location ? resumeData.contactInfo.location : ""
+    contact.location ? contact.location : ""
   );
   const [zipCode, setZipCode] = useState(
-    resumeData.contactInfo.zipCode ? resumeData.contactInfo.zipCode : ""
+    contact.zipCode ? contact.zipCode : ""
   );
-  const [phone, setPhone] = useState(
-    resumeData.contactInfo.phone ? resumeData.contactInfo.phone : ""
-  );
-  const [email, setEmail] = useState(
-    resumeData.contactInfo.email ? resumeData.contactInfo.email : ""
-  );
+  const [phone, setPhone] = useState(contact.phone ? contact.phone : "");
+  const [email, setEmail] = useState(contact.email ? contact.email : "");
 
   const contactData = {
     firstName: firstName,
@@ -46,11 +44,12 @@ export function ContactInfo({
   // console.log(resumeData);
   // console.log(resumeData.contactInfo);
 
-  let data = {};
-  data.contactInfo = contactData;
+  useEffect(() => {
+    handleContactChanges(contactData);
+  }, [firstName, lastName, profession, location, zipCode, phone, email]); // Runs whenever firstName changes
 
   const handleFirstName = (e) => {
-    setFirstName(e.target.value);
+    setFirstName(() => e.target.value);
   };
 
   const handleLastName = (e) => {
@@ -186,7 +185,7 @@ export function ContactInfo({
         </div>
         <div className="preview_area hidden md:flex justify-center p-5 w-full">
           <div className="preview aspect-[8.5/11] flex md:w-1/3 lg:w-full h-fit border border-gray-500 shadow-md shadow-gray-400 bg-gray-100 overflow-hidden">
-            <TemplatePaper isOpen={isOpen} resumeData={data} />
+            <TemplatePaper isOpen={isOpen} resumeData={resumeData} />
           </div>
         </div>
       </div>

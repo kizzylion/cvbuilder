@@ -94,6 +94,18 @@ export function WorkHistory({
   const handleStartDate = (e) => {
     setStartDate(e.target.value);
   };
+  const getCurrentMonth = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0"); // Add leading zero if necessary
+    return `${year}-${month}`;
+  };
+
+  useEffect(() => {
+    // Set the initial value to the current month
+    setStartDate(getCurrentMonth());
+    setEndDate(getCurrentMonth());
+  }, []);
 
   useEffect(() => {
     console.log(setStartDate);
@@ -103,19 +115,26 @@ export function WorkHistory({
     setEndDate(e.target.value);
   };
   const handleJobDescription = (e) => {
+    // const htmlContent = textContent.replace(/\n/g, "<br>");
+
     setJobDescription(e.target.value);
   };
 
-  function jobList() {
-    const listItems = jobs.map((job, index) => (
+  function jobList(jobArr) {
+    const listItems = jobArr.map((job, index) => (
       <ExperienceCard
-        key={job.key}
+        key={job.id}
         cardTitle={`Work Experience ${index + 1}`}
         title={job.jobTitle}
         title2={job.employer}
         subtitle1={job.jobLocation}
         subtitle2={`${job.startDate} - ${job.endDate}`}
-        description={job.jobDescription}
+        description={job.jobDescription.split("\n").map((line, index) => (
+          <span key={index}>
+            {line}
+            <br />
+          </span>
+        ))}
       />
     ));
     return listItems;
@@ -223,7 +242,7 @@ export function WorkHistory({
             />
             <div className="grid grid-col-1 gap-4 ">
               <ul className="work-list grid grid-col-1 gap-5 lg:gap-6">
-                {jobList()}
+                {jobList(jobs)}
                 {/* <ExperienceCard
                   cardTitle={"Work Experience 1"}
                   title="Web Developer"

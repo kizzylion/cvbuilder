@@ -32,6 +32,57 @@ export default function TemplatePaper({ isOpen, resumeData }) {
       window.removeEventListener("resize", scaleToFitParent);
     };
   }, []);
+
+  const jobList = (jobArr) => {
+    if (jobArr.length) {
+      const listItems = jobArr.map((job) => (
+        <div key={job.id} className="grid grid-cols-[1fr_3fr] gap-[2.5em]">
+          <div className="duration text-[0.75em]">
+            <p>
+              {job.startDate} - {job.endDate}
+            </p>
+          </div>
+          <div>
+            <h4 className="text-[1.3em] mb-[0.2em] font-semibold">
+              {job.jobTitle}
+            </h4>
+            <p className="text[1.125em] mb-[0.5em]">
+              <span>{job.employer}</span>, <span>{job.jobLocation}</span>.
+            </p>
+            <p className="">
+              {job.jobDescription.split("\n").map((line, index) => (
+                <span key={index}>
+                  {line}
+                  <br />
+                </span>
+              ))}
+            </p>
+          </div>
+        </div>
+      ));
+      return listItems;
+    } else {
+      return (
+        <div id="work2" className="grid grid-cols-[1fr_3fr] gap-[2.5em]">
+          <div className="duration text-[1.25em]">start - end</div>
+          <div>
+            <h4 className="text-[1.3em] mb-[0.2em] font-semibold">Job Title</h4>
+            <p className="text-[1.125em] mb-[0.5em]">
+              <span>Employer</span>, <span>Location</span>.
+            </p>
+            <p className="">
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+              <br />
+              Provident, qui. Lorem, ipsum dolor sit amet consectetur <br />
+              adipisicing elit. Provident, qui. Lorem, ipsum dolor sit <br />
+              amet consectetur adipisicing elit. Provident, qui.
+            </p>
+          </div>
+        </div>
+      );
+    }
+  };
+
   return (
     <div
       className={`docParent items-start aspect-[8.5/11]  w-full h-full ${
@@ -60,34 +111,48 @@ export default function TemplatePaper({ isOpen, resumeData }) {
                 : "Web Developer"}
             </h4>
           </div>
-          <div id="contact" className="pb-[0.75em]">
+          <div id="contact" className="pb-[0.75em] flex flex-col">
             <div className="bg-indigo-900 px-[1.25em] py-[0.25em] mb-[0.5em]">
               <h3 className="text-[1.5em] font-semibold">Contact</h3>
             </div>
             <div id="address" className="text-[1em] px-[1.125em] mb-[0.75em]">
               <h4 className="font-semibold">Address</h4>
               <p className="text-indigo-200">
-                {resumeData.contactInfo
+                {resumeData.contactInfo.location
                   ? `${resumeData.contactInfo.location}, ${resumeData.contactInfo.zipCode}.`
-                  : "CHUKWUMA IHEANACHO"}
+                  : "Lagos, Nigeria. 123456"}
               </p>
             </div>
-            <div id="telephone" className="text-[1em] px-[1.125em] mb-[0.75em]">
+            <div
+              id="telephone"
+              className="flex flex-col w-full text-[1em] px-[1.125em] mb-[0.75em]"
+            >
               <h4 className="font-semibold">Phone</h4>
-              <a href="tel:+2349023456789" className="text-indigo-200">
+              <a
+                href="tel:+2349023456789"
+                className="text-indigo-200 flex flex-wrap text-wrap"
+              >
                 {resumeData.contactInfo.phone
                   ? `${resumeData.contactInfo.phone}
                 `
                   : "+2349023456789"}
               </a>
             </div>
-            <div id="mail" className="text-[1em] px-[1.125em]">
+            <div
+              id="mail"
+              className="text-[1em] flex flex-col px-[1.125em] flex-wrap"
+            >
               <h4 className="font-semibold">Email</h4>
-              <a href="mailto:kztchm@gmail.com" className="text-indigo-200">
-                {resumeData.contactInfo.email
-                  ? `${resumeData.contactInfo.email}`
-                  : "kizitochukwu"}
-              </a>
+              <p className="flex w-full text-wrap box-border white-space:pre-wrap word-wrap:break-word ">
+                <a
+                  href="mailto:kztchm@gmail.com"
+                  className="text-indigo-200 block w-full text-wrap white-space:pre-wrap word-wrap:break-word"
+                >
+                  {resumeData.contactInfo.email
+                    ? `${resumeData.contactInfo.email}`
+                    : "kizitochukwu@example.com"}
+                </a>
+              </p>
             </div>
           </div>
           <div id="weblinks" className="pb-[0.75em]">
@@ -158,52 +223,7 @@ export default function TemplatePaper({ isOpen, resumeData }) {
                 amet labore officia, fugit quos doloribus libero la
               </p>
               <div id="workList" className="flex flex-col gap-[1em]">
-                <div
-                  id="work1"
-                  className="grid grid-cols-[1fr_3fr] gap-[2.5em]"
-                >
-                  <div className="duration text-[1.25em]">start - end</div>
-                  <div>
-                    <h4 className="text-[1.3em] mb-[0.2em] font-semibold">
-                      Job Title
-                    </h4>
-                    <p className="text[1.125em] mb-[0.5em]">
-                      <span>Employer</span>, <span>Location</span>.
-                    </p>
-                    <p className="">
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                      <br />
-                      Provident, qui. Lorem, ipsum dolor sit amet consectetur{" "}
-                      <br />
-                      adipisicing elit. Provident, qui. Lorem, ipsum dolor sit{" "}
-                      <br />
-                      amet consectetur adipisicing elit. Provident, qui.
-                    </p>
-                  </div>
-                </div>
-                <div
-                  id="work2"
-                  className="grid grid-cols-[1fr_3fr] gap-[2.5em]"
-                >
-                  <div className="duration text-[1.25em]">start - end</div>
-                  <div>
-                    <h4 className="text-[1.3em] mb-[0.2em] font-semibold">
-                      Job Title
-                    </h4>
-                    <p className="text-[1.125em] mb-[0.5em]">
-                      <span>Employer</span>, <span>Location</span>.
-                    </p>
-                    <p className="">
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                      <br />
-                      Provident, qui. Lorem, ipsum dolor sit amet consectetur{" "}
-                      <br />
-                      adipisicing elit. Provident, qui. Lorem, ipsum dolor sit{" "}
-                      <br />
-                      amet consectetur adipisicing elit. Provident, qui.
-                    </p>
-                  </div>
-                </div>
+                {jobList(resumeData.workHistory)}
               </div>
             </div>
           </div>
