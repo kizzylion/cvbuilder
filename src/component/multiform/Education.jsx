@@ -6,7 +6,7 @@ import { Button } from "../utilities/button";
 import { MonthInput } from "../utilities/monthinput";
 import { ExperienceCard } from "../utilities/experience-card";
 
-export function Education({ handleBack, handleNext }) {
+export function Education({ handleBack, handleNext, resumeData }) {
   const [openTemplate, setOpenTemplate] = useState(false);
   const [openEducationArray, setOpenEducationArray] = useState(false);
 
@@ -19,7 +19,7 @@ export function Education({ handleBack, handleNext }) {
 
   return (
     <div className="flex flex-col h-full justify-between relative">
-      <div className={`education grid  grid-cols-1  gap-16 mb-5`}>
+      <div className={`education grid  grid-cols-1  gap-16 pb-20 `}>
         <div
           className={`content-with-array ${
             openTemplate ? "hidden" : " "
@@ -157,7 +157,7 @@ export function Education({ handleBack, handleNext }) {
             />
           </div>
           <div className="preview aspect-[8.5/11] flex w-full lg:w-2/3 h-fit border border-gray-500 shadow-md shadow-gray-400 bg-gray-100 overflow-auto">
-            <TemplatePaper isOpen={openTemplate} />
+            <TemplatePaper isOpen={openTemplate} resumeData={resumeData} />
           </div>
         </div>
       </div>
@@ -208,7 +208,7 @@ export function Education({ handleBack, handleNext }) {
           <div className="order-0 md:order-1">
             <Button
               type={"primary"}
-              label={"Next: Education"}
+              label={"Next: Skill"}
               preIcon={false}
               postIcon={false}
               onClick={handleNext}

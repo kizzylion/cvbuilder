@@ -11,10 +11,12 @@ export default function Header() {
         className="grid place-content-center max-w-7xl p-3 lg:px-8 mx-auto lg:place-content-start"
       >
         <a
-          href="#"
+          href={`${window.reload}`}
           className="py-2 mx-auto text-base text-gray-900 font-semibold md:text-lg lg:text-xl lg:text-gray-100 "
         >
-          kizzys<span className="text-indigo-700">CV</span> Builder
+          kizzyLion
+          <span className="text-indigo-700 lg:text-indigo-500">CV</span>{" "}
+          <span className="text-amber-600 lg:text-amber-500">Builder</span>
         </a>
       </div>
     </header>

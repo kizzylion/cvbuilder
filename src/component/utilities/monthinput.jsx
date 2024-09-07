@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./input.scss";
 
-export function MonthInput({ label, type, id }) {
+export function MonthInput({ label, type, id, value, onChange, require }) {
   const [startDate, setStartDate] = useState("");
 
   const getCurrentMonth = () => {
@@ -25,9 +25,10 @@ export function MonthInput({ label, type, id }) {
       <div className="input-group flex flex-col w-full h-fit">
         <label
           className="form-label uppercase md:capitalize mb-[6px] text-xs text-gray-700 font-medium"
-          htmlFor="firstName"
+          htmlFor={id}
         >
           {label}
+          {require && <span className="text-red-600">*</span>}
         </label>
         <input
           className="form-control "
@@ -35,8 +36,9 @@ export function MonthInput({ label, type, id }) {
           id={id}
           name={id}
           min={"1970-01"}
-          value={startDate}
-          onChange={handleChange}
+          value={value}
+          onChange={onChange}
+          required={require}
         />
       </div>
     );

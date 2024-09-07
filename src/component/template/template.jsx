@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import "./template.scss";
 
-export default function TemplatePaper({ isOpen }) {
+export default function TemplatePaper({ isOpen, resumeData }) {
   const parentRef = useRef(null);
   const childRef = useRef(null);
 
@@ -50,9 +50,15 @@ export default function TemplatePaper({ isOpen }) {
         >
           <div id="identity" className=" px-[1.25em] pb-[1.25em]">
             <h1 className="text-[150%] font-bold mb-[0.75em]">
-              CHUKWUMA IHEANACHO
+              {resumeData.contactInfo.firstName
+                ? `${resumeData.contactInfo.firstName} ${resumeData.contactInfo.lastName}`
+                : "CHUKWUMA IHEANACHO"}
             </h1>
-            <h4 className="text-[1.1em]">Web developer</h4>
+            <h4 className="text-[1.1em]">
+              {resumeData.contactInfo.profession
+                ? `${resumeData.contactInfo.profession}`
+                : "Web Developer"}
+            </h4>
           </div>
           <div id="contact" className="pb-[0.75em]">
             <div className="bg-indigo-900 px-[1.25em] py-[0.25em] mb-[0.5em]">
@@ -60,18 +66,27 @@ export default function TemplatePaper({ isOpen }) {
             </div>
             <div id="address" className="text-[1em] px-[1.125em] mb-[0.75em]">
               <h4 className="font-semibold">Address</h4>
-              <p className="text-indigo-200">Lagos, Nigeria. 100101 LA</p>
+              <p className="text-indigo-200">
+                {resumeData.contactInfo
+                  ? `${resumeData.contactInfo.location}, ${resumeData.contactInfo.zipCode}.`
+                  : "CHUKWUMA IHEANACHO"}
+              </p>
             </div>
             <div id="telephone" className="text-[1em] px-[1.125em] mb-[0.75em]">
               <h4 className="font-semibold">Phone</h4>
               <a href="tel:+2349023456789" className="text-indigo-200">
-                +2349023456789
+                {resumeData.contactInfo.phone
+                  ? `${resumeData.contactInfo.phone}
+                `
+                  : "+2349023456789"}
               </a>
             </div>
             <div id="mail" className="text-[1em] px-[1.125em]">
               <h4 className="font-semibold">Email</h4>
               <a href="mailto:kztchm@gmail.com" className="text-indigo-200">
-                kztchm@gmail.com
+                {resumeData.contactInfo.email
+                  ? `${resumeData.contactInfo.email}`
+                  : "kizitochukwu"}
               </a>
             </div>
           </div>

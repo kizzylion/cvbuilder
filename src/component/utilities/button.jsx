@@ -33,7 +33,7 @@ export function Button({ label, type, preIcon, postIcon, onClick }) {
     return (
       <button
         onClick={onClick}
-        className="flex flex-row px-1 py-1 hover:bg-indigo-50 hover:bg-transparent hover:underline focus:underline   border-0 border-indigo-800 text-sm lg:text-base font-semibold text-indigo-800 focus:ring-0 ring-indigo-200 overflow-hidden gap-1  "
+        className="flex flex-row px-1 py-1 hover:bg-indigo-50 hover:bg-transparent hover:underline focus:underline   border-0 border-indigo-800 text-sm lg:text-base font-semibold text-indigo-800 focus:ring-0 ring-indigo-200 overflow-hidden gap-1 w-fit  "
       >
         <span className={`${preIcon ? "block" : "hidden"} w-5 h-5`}>
           {preIcon}

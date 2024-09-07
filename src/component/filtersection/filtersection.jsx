@@ -13,7 +13,7 @@ export function FilterSection({ isOpen, handleMultiForm }) {
         <div className="filter-actions">
           <Button
             type={"secondary"}
-            label={"Create New Resume"}
+            label={"Create Resume"}
             preIcon={false}
             postIcon={false}
             onClick={handleMultiForm}

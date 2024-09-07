@@ -41,7 +41,7 @@ export default function App() {
       <Header ref={headerRef} />
       <main
         id="library"
-        className={`bg-white h-full ${openMultiForm && "hidden"}`}
+        className={`bg-white h-full ${openMultiForm && "hidden"} flex flex-col`}
       >
         <div className="bg-white" style={{ paddingTop: `${headerHeight}px` }}>
           <FilterSection
@@ -49,7 +49,7 @@ export default function App() {
             handleMultiForm={handleMultiForm}
           />
         </div>
-        <div className="max-w-7xl mx-auto w-full flex flex-col px-4 md:px-6 lg:px-8 py-5 ">
+        <div className="max-w-7xl mx-auto w-full h-full flex flex-col px-4 md:px-6 lg:px-8 pt-5 ">
           <div className="hidden md:flex justify-between mb-1 gap-4 w-full h-fit font-semibold uppercase text-base text-900 pl-8 py-3">
             <div className="flex w-full gap-4 ">
               <p className="w-1/2">NAME</p>
@@ -57,7 +57,7 @@ export default function App() {
             </div>
             <p className="w-1/3">ACTION</p>
           </div>
-          <div className="resume-list flex flex-col gap-0 w-full py-3 pl-4 md:pl-8">
+          <div className="resume-list flex flex-col gap-0 w-full h-full py-3 pl-4 md:pl-8">
             <article className="resume-item flex w-full  text-base gap-4 py-4 ">
               <div className="w-full flex flex-col text-gray-900 md:flex-row gap-0.5 md:gap-4">
                 <p className="w-1/2 font-medium ">John_Doe_Resume_1</p>
@@ -81,6 +81,27 @@ export default function App() {
               </p>
             </article>
           </div>
+          <footer className="bg-white">
+            <div className="max-w-7xl mx-auto w-full flex flex-col md:flex-row md:justify-between px-4 md:px-6 lg:px-8 py-5 gap-3">
+              <div className="socials flex text-xl text-gray-900 gap-6 w-fit">
+                <a href="mailto:kztchm@gmail.com">
+                  <i className="bi bi-envelope-fill"></i>
+                </a>
+                <a href="#">
+                  <i className="bi bi-facebook"></i>
+                </a>
+                <a href="#">
+                  <i className="bi bi-twitter-x"></i>
+                </a>
+                <a href="#">
+                  <i className="bi bi-linkedin"></i>
+                </a>
+              </div>
+              <p className="text-gray-600 font-normal text-sm">
+                Copyright &copy;2024. All rights reserved.
+              </p>
+            </div>
+          </footer>
         </div>
       </main>
       <div
@@ -90,7 +111,7 @@ export default function App() {
         <MultiForm isOpen={openMultiForm} closeMultiform={handleMultiForm} />
       </div>
 
-      <footer className="bg-white">
+      {/* <footer className="bg-gray-50">
         <div className="max-w-7xl mx-auto w-full flex flex-col md:flex-row md:justify-between px-4 md:px-6 lg:px-8 py-5 gap-3">
           <div className="socials flex text-xl text-gray-900 gap-6 w-fit">
             <a href="mailto:kztchm@gmail.com">
@@ -110,7 +131,7 @@ export default function App() {
             Copyright &copy;2024. All rights reserved.
           </p>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FormHeading } from "../utilities/formheading";
 import TemplatePaper from "../template/template";
 import { Input } from "../utilities/input";
@@ -6,9 +6,17 @@ import { Button } from "../utilities/button";
 import { MonthInput } from "../utilities/monthinput";
 import { ExperienceCard } from "../utilities/experience-card";
 
-export function WorkHistory({ handleBack, handleNext }) {
+export function WorkHistory({
+  handleBack,
+  handleNext,
+  resumeData,
+  jobs,
+  handleNewJob,
+}) {
   const [openTemplate, setOpenTemplate] = useState(false);
-  const [openWorkArray, setOpenWorkArray] = useState(false);
+  const [openWorkArray, setOpenWorkArray] = useState(
+    resumeData.workHistory.length > 0 ? true : false
+  );
 
   const handlePreview = () => {
     setOpenTemplate(!openTemplate);
@@ -17,9 +25,105 @@ export function WorkHistory({ handleBack, handleNext }) {
     setOpenWorkArray(!openWorkArray);
   };
 
+  const isValid = () => {
+    return (
+      jobTitle && employer && jobLocation
+      // profession &&
+      // location &&
+      // zipCode &&
+      // phone &&
+      // email
+    );
+  };
+
+  const handleSaveNewJob = () => {
+    if (isValid()) {
+      const uuid = crypto.randomUUID();
+      workData.id = uuid;
+      handleNewJob(workData);
+      emptyWorkData();
+      handleWorkArray();
+    } else {
+      alert("Please fill in all the required fields.");
+    }
+  };
+
+  const [jobTitle, setJobTitle] = useState("");
+  const [employer, setEmployer] = useState("");
+  const [jobLocation, setJobLocation] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [jobDescription, setJobDescription] = useState("");
+
+  const workData = {
+    jobTitle: jobTitle,
+    employer: employer,
+    jobLocation: jobLocation,
+    startDate: startDate,
+    endDate: endDate,
+    jobDescription: jobDescription,
+  };
+
+  function emptyWorkData() {
+    setJobTitle("");
+    setEmployer("");
+    setJobLocation("");
+    setStartDate("2022-01");
+    setEndDate("2024-02");
+    setJobDescription("");
+  }
+
+  console.log(resumeData);
+  console.log(resumeData.workHistory);
+
+  let data = {};
+  data.workHistory = resumeData.workHistory;
+
+  const handleJobtitle = (e) => {
+    setJobTitle(e.target.value);
+  };
+
+  const handleEmployer = (e) => {
+    setEmployer(e.target.value);
+  };
+
+  const handleJobLocation = (e) => {
+    setJobLocation(e.target.value);
+  };
+
+  const handleStartDate = (e) => {
+    setStartDate(e.target.value);
+  };
+
+  useEffect(() => {
+    console.log(setStartDate);
+  }, [startDate]);
+
+  const handleEndDate = (e) => {
+    setEndDate(e.target.value);
+  };
+  const handleJobDescription = (e) => {
+    setJobDescription(e.target.value);
+  };
+
+  function jobList() {
+    const listItems = jobs.map((job, index) => (
+      <ExperienceCard
+        key={job.key}
+        cardTitle={`Work Experience ${index + 1}`}
+        title={job.jobTitle}
+        title2={job.employer}
+        subtitle1={job.jobLocation}
+        subtitle2={`${job.startDate} - ${job.endDate}`}
+        description={job.jobDescription}
+      />
+    ));
+    return listItems;
+  }
+
   return (
     <div className="flex flex-col h-full justify-between relative">
-      <div className={`work grid  grid-cols-1  gap-16 mb-5`}>
+      <div className={`work grid  grid-cols-1  gap-16 pb-20 md:pb-0 lg:pb-20`}>
         <div
           className={`content-with-array ${
             openTemplate ? "hidden" : " "
@@ -37,13 +141,16 @@ export function WorkHistory({ handleBack, handleNext }) {
               handleBack={handleBack}
             />
             <form action="#">
-              <div className="grid grid-cols-2 gap-5 lg:gap-6">
+              <div className="grid grid-cols-2 gap-5 lg:gap-6 pb-20 md:pb-0 lg:pb-20">
                 <div className="col-span-2 md:col-span-1">
                   <Input
                     label={"Job Title"}
                     type={"text"}
                     id={"jobTitle"}
                     placeholder={"eg. Web Developer"}
+                    require={true}
+                    value={jobTitle}
+                    onChange={handleJobtitle}
                   />
                 </div>
                 <div className="col-span-2 md:col-span-1">
@@ -52,14 +159,20 @@ export function WorkHistory({ handleBack, handleNext }) {
                     type={"text"}
                     id={"employer"}
                     placeholder={"eg. Microsoft"}
+                    require={true}
+                    value={employer}
+                    onChange={handleEmployer}
                   />
                 </div>
                 <div className="col-span-2">
                   <Input
                     label={"Job Location"}
                     type={"text"}
-                    id={"jobLocationn"}
+                    id={"jobLocation"}
                     placeholder={"eg. Lagos, Nigeria"}
+                    require={true}
+                    value={jobLocation}
+                    onChange={handleJobLocation}
                   />
                 </div>
 
@@ -68,6 +181,9 @@ export function WorkHistory({ handleBack, handleNext }) {
                     label={"Start Date"}
                     type={"month"}
                     id={"startDate"}
+                    value={startDate}
+                    onChange={handleStartDate}
+                    require={true}
                   />
                 </div>
                 <div className="col-span-2 md:col-span-1">
@@ -75,6 +191,9 @@ export function WorkHistory({ handleBack, handleNext }) {
                     label={"End Date"}
                     type={"month"}
                     id={"endDate"}
+                    value={endDate}
+                    onChange={handleEndDate}
+                    require={true}
                   />
                 </div>
 
@@ -84,6 +203,8 @@ export function WorkHistory({ handleBack, handleNext }) {
                     type={"textarea"}
                     id={"jobDescription"}
                     placeholder={"Add your job description here"}
+                    value={jobDescription}
+                    onChange={handleJobDescription}
                   />
                 </div>
               </div>
@@ -92,17 +213,18 @@ export function WorkHistory({ handleBack, handleNext }) {
           <div
             className={` ${
               !openWorkArray ? "hidden" : "grid"
-            } work-array w-full lg:w-[58%]`}
+            } work-array w-full lg:w-[58%] pb-20 `}
           >
             <FormHeading
               title={"Work History Summary"}
               subtitle={""}
               instruction={false}
-              handleBack={handleWorkArray}
+              handleBack={handleBack}
             />
             <div className="grid grid-col-1 gap-4 ">
-              <div className="work-list grid grid-col-1 gap-5 lg:gap-6">
-                <ExperienceCard
+              <ul className="work-list grid grid-col-1 gap-5 lg:gap-6">
+                {jobList()}
+                {/* <ExperienceCard
                   cardTitle={"Work Experience 1"}
                   title="Web Developer"
                   title2="Microsoft"
@@ -128,8 +250,8 @@ Wrote custom HTML and JavaScript for existing  websites. Developed user interfac
                   subtitle2="August 2023 - August 2024"
                   description="Wrote custom HTML and JavaScript for existing  websites. Developed user interfaces with modern JavaScript frameworks, HTML5, and CSS3.
 Wrote custom HTML and JavaScript for existing  websites. Developed user interfaces with modern JavaScript frameworks, HTML5, and CSS3."
-                />
-              </div>
+                /> */}
+              </ul>
               <div className="justify-self-center">
                 <Button
                   type={"tertiary"}
@@ -157,7 +279,7 @@ Wrote custom HTML and JavaScript for existing  websites. Developed user interfac
             />
           </div>
           <div className="preview aspect-[8.5/11] flex w-full lg:w-2/3 h-fit border border-gray-500 shadow-md shadow-gray-400 bg-gray-100 overflow-auto">
-            <TemplatePaper isOpen={openTemplate} />
+            <TemplatePaper isOpen={openTemplate} resumeData={resumeData} />
           </div>
         </div>
       </div>
@@ -184,7 +306,7 @@ Wrote custom HTML and JavaScript for existing  websites. Developed user interfac
               label={"Save & Next"}
               preIcon={false}
               postIcon={false}
-              onClick={handleWorkArray}
+              onClick={handleSaveNewJob}
             />
           </div>
         </footer>
