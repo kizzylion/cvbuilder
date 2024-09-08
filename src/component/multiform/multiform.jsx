@@ -35,7 +35,7 @@ export function MultiForm({ closeMultiform, isOpen }) {
     degrees.push(degree);
   };
 
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep, setCurrentStep] = useState(0);
 
   function handleNext() {
     currentStep === formSteps.length
