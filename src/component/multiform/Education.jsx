@@ -5,10 +5,21 @@ import { Input } from "../utilities/input";
 import { Button } from "../utilities/button";
 import { MonthInput } from "../utilities/monthinput";
 import { ExperienceCard } from "../utilities/experience-card";
+import { generateUUID } from "../utilities/uuid";
 
-export function Education({ handleBack, handleNext, resumeData }) {
+export function Education({
+  handleBack,
+  handleNext,
+  resumeData,
+  degrees,
+  handleNewDegree,
+  setEducationData,
+}) {
   const [openTemplate, setOpenTemplate] = useState(false);
-  const [openEducationArray, setOpenEducationArray] = useState(false);
+  const [openEducationArray, setOpenEducationArray] = useState(
+    resumeData.educationData.length > 0 ? true : false
+  );
+  const [educationMode, setEducationMode] = useState("create");
 
   const handlePreview = () => {
     setOpenTemplate(!openTemplate);
@@ -19,7 +30,7 @@ export function Education({ handleBack, handleNext, resumeData }) {
 
   return (
     <div className="flex flex-col h-full justify-between relative">
-      <div className={`education grid  grid-cols-1  gap-16 pb-20 `}>
+      <div className={`education grid  grid-cols-1  gap-16 md:pb-0  pb-20 `}>
         <div
           className={`content-with-array ${
             openTemplate ? "hidden" : " "
@@ -39,7 +50,7 @@ export function Education({ handleBack, handleNext, resumeData }) {
               handleBack={handleBack}
             />
             <form action="#">
-              <div className="grid grid-cols-2 gap-5 lg:gap-6">
+              <div className="grid grid-cols-2 gap-5 lg:gap-6 pb-20 md:pb-0 lg:pb-20">
                 <div className="col-span-2 md:col-span-1">
                   <Input
                     label={"School Name"}

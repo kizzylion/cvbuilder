@@ -9,11 +9,17 @@ import { Summary } from "./summary";
 export function MultiForm({ closeMultiform, isOpen }) {
   const [contactInfo, setContactInfo] = useState("");
   const [workHistory, setWorkHistory] = useState(new Array());
+  const [educationData, setEducationData] = useState(new Array());
 
-  const newResumeData = { contactInfo: contactInfo, workHistory: workHistory };
+  const newResumeData = {
+    contactInfo: contactInfo,
+    workHistory: workHistory,
+    educationData: educationData,
+  };
 
   let contact = newResumeData.contactInfo;
   let jobs = newResumeData.workHistory;
+  let degrees = newResumeData.educationData;
 
   let formSteps = [
     "Contact Info",
@@ -24,6 +30,9 @@ export function MultiForm({ closeMultiform, isOpen }) {
   ];
   const addNewJob = (job) => {
     jobs.push(job);
+  };
+  const addNewDegree = (degree) => {
+    jobs.push(degree);
   };
 
   const [currentStep, setCurrentStep] = useState(0);
@@ -43,7 +52,13 @@ export function MultiForm({ closeMultiform, isOpen }) {
     setCurrentStep((prev) => prev - 1);
   }
 
-  function displayActiveForm(currentStep, data, tempContact, tempJobs) {
+  function displayActiveForm(
+    currentStep,
+    data,
+    tempContact,
+    tempJobs,
+    tempDegrees
+  ) {
     switch (currentStep) {
       case 0:
         return (
@@ -80,8 +95,16 @@ export function MultiForm({ closeMultiform, isOpen }) {
         return (
           <Education
             handleBack={handleBack}
-            handleNext={handleNext}
             resumeData={data}
+            degrees={tempDegrees}
+            handleNewDegree={(data) => {
+              addNewDegree(data);
+            }}
+            setEducationData={(data) => setEducationData(data)}
+            handleNext={() => {
+              setEducationData(degrees);
+              handleNext();
+            }}
           />
         );
       case 3:

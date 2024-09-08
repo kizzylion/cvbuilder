@@ -45,7 +45,10 @@ export default function App() {
         id="library"
         className={`bg-white h-full ${openMultiForm && "hidden"} flex flex-col`}
       >
-        <div className="bg-white" style={{ paddingTop: `${headerHeight}px` }}>
+        <div
+          className="bg-white md:pt-[]"
+          style={{ paddingTop: `${headerHeight}px` }}
+        >
           <FilterSection
             isOpen={!openMultiForm}
             handleMultiForm={handleMultiForm}
@@ -110,6 +113,7 @@ export default function App() {
         className={`bg-gray-50 ${
           !openMultiForm ? " hidden" : " "
         } pt-[${headerHeight}px]`}
+        style={{ paddingTop: `${headerHeight}px` }}
       >
         <MultiForm isOpen={openMultiForm} closeMultiform={handleMultiForm} />
       </div>

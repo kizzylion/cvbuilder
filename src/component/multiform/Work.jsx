@@ -28,6 +28,13 @@ export function WorkHistory({
     setOpenWorkArray(() => !openWorkArray);
   };
 
+  const [jobTitle, setJobTitle] = useState("");
+  const [employer, setEmployer] = useState("");
+  const [jobLocation, setJobLocation] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [jobDescription, setJobDescription] = useState("");
+
   const isValid = () => {
     return (
       jobTitle && employer && jobLocation
@@ -51,13 +58,6 @@ export function WorkHistory({
     }
   };
 
-  const [jobTitle, setJobTitle] = useState("");
-  const [employer, setEmployer] = useState("");
-  const [jobLocation, setJobLocation] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [jobDescription, setJobDescription] = useState("");
-
   const workData = {
     jobTitle: jobTitle,
     employer: employer,
@@ -78,9 +78,6 @@ export function WorkHistory({
 
   console.log(resumeData);
   console.log(resumeData.workHistory);
-
-  // let data = {};
-  // data.workHistory = resumeData.workHistory;
 
   const handleJobtitle = (e) => {
     setJobTitle(e.target.value);
