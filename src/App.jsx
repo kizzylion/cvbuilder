@@ -38,7 +38,9 @@ export default function App() {
 
   return (
     <div className={`App bg-gray-50 flex flex-col h-full `}>
-      <Header ref={headerRef} />
+      <div className={`${openMultiForm && "hidden md:block"}`}>
+        <Header ref={headerRef} />
+      </div>
       <main
         id="library"
         className={`bg-white h-full ${openMultiForm && "hidden"} flex flex-col`}
@@ -105,8 +107,9 @@ export default function App() {
         </div>
       </main>
       <div
-        className={`bg-gray-50 ${!openMultiForm ? " hidden" : " "} `}
-        style={{ paddingTop: `${headerHeight}px` }}
+        className={`bg-gray-50 ${
+          !openMultiForm ? " hidden" : " "
+        } pt-[${headerHeight}px]`}
       >
         <MultiForm isOpen={openMultiForm} closeMultiform={handleMultiForm} />
       </div>

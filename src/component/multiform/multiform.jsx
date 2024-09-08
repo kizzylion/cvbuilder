@@ -6,7 +6,7 @@ import { WorkHistory } from "./Work";
 import { Skill } from "./skill";
 import { Summary } from "./summary";
 
-export function MultiForm({ closeMultiform }) {
+export function MultiForm({ closeMultiform, isOpen }) {
   const [contactInfo, setContactInfo] = useState("");
   const [workHistory, setWorkHistory] = useState(new Array());
 
@@ -107,7 +107,7 @@ export function MultiForm({ closeMultiform }) {
 
   return (
     <section>
-      <div className="sticky z-40 top-14 border-b border-gray-400">
+      <div className={`sticky z-40 top-0 md:top-14 border-b border-gray-400  `}>
         <ProgressBar array={formSteps} currentStep={currentStep} />
       </div>
       <div
