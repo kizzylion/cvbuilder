@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FormHeading } from "../utilities/formheading";
 import TemplatePaper from "../template/template";
 import { Input } from "../utilities/input";
@@ -28,9 +28,117 @@ export function Education({
     setOpenEducationArray(!openEducationArray);
   };
 
+  const [schoolName, setSchoolName] = useState("");
+  const [schoolLocation, setSchoolLocation] = useState("");
+  const [schoolDegree, setSchoolDegree] = useState("");
+  const [fieldStudied, setFieldStudied] = useState("");
+  const [gradDate, setGradDate] = useState("");
+  const [degreeDescription, setDegreeDescription] = useState("");
+
+  const isValid = () => {
+    return (
+      schoolName !== "" &&
+      schoolLocation !== "" &&
+      schoolDegree !== "" &&
+      fieldStudied !== "" &&
+      gradDate !== ""
+      // degreeDescription !== ""
+    );
+  };
+
+  const degreeData = {
+    schoolName: schoolName,
+    schoolLocation: schoolLocation,
+    schoolDegree: schoolDegree,
+    fieldStudied: fieldStudied,
+    gradDate: gradDate,
+    degreeDescription: degreeDescription,
+  };
+
+  const handleSaveNewDegree = () => {
+    if (isValid()) {
+      const uuid = generateUUID();
+      degreeData.id = uuid;
+      handleNewDegree(degreeData);
+      emptyDegreeData();
+      handleArray();
+    } else {
+      alert("Please fill all the fields");
+    }
+  };
+  const emptyDegreeData = () => {
+    setSchoolName("");
+    setSchoolLocation("");
+    setSchoolDegree("");
+    setFieldStudied("");
+    setGradDate("2024-02");
+    setDegreeDescription("");
+  };
+
+  console.log(resumeData);
+  console.log(resumeData.educationData);
+  const getCurrentMonth = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0"); // Add leading zero if necessary
+    return `${year}-${month}`;
+  };
+
+  useEffect(() => {
+    // Set the initial value to the current month
+    setGradDate(getCurrentMonth());
+  }, []);
+
+  const handleSchoolName = (e) => {
+    setSchoolName(e.target.value);
+  };
+
+  const handleSchoolLocation = (e) => {
+    setSchoolLocation(e.target.value);
+  };
+
+  const handleSchoolDegree = (e) => {
+    setSchoolDegree(e.target.value);
+  };
+
+  const handleFieldStudied = (e) => {
+    setFieldStudied(e.target.value);
+  };
+
+  const handleGradDate = (e) => {
+    setGradDate(e.target.value);
+  };
+
+  const handleDegreeDescription = (e) => {
+    setDegreeDescription(e.target.value);
+  };
+
+  degreeDescription;
+  function degreeList(degArr) {
+    const listItems = degArr.map((degree, index) => (
+      <ExperienceCard
+        key={degree.id}
+        cardTitle={`Degree ${index + 1}`}
+        title={degree.schoolDegree}
+        title2={`${degree.gradDate}, ${degree.fieldStudied}`}
+        subtitle1={degree.schoolName}
+        subtitle2={`${degree.schoolLocation}`}
+        description={degree.degreeDescription.split("\n").map((line, index) => (
+          <span key={index}>
+            • {line}
+            <br />
+          </span>
+        ))}
+      />
+    ));
+    return listItems;
+  }
+
   return (
     <div className="flex flex-col h-full justify-between relative">
-      <div className={`education grid  grid-cols-1  gap-16 md:pb-0  pb-20 `}>
+      <div
+        className={`education grid  grid-cols-1  gap-16 pb:20 md:pb-0  lg:pb-20 `}
+      >
         <div
           className={`content-with-array ${
             openTemplate ? "hidden" : " "
@@ -57,6 +165,9 @@ export function Education({
                     type={"text"}
                     id={"schoolName"}
                     placeholder={"eg. Manchester Met University"}
+                    onChange={handleSchoolName}
+                    value={schoolName}
+                    require={true}
                   />
                 </div>
                 <div className="col-span-2 md:col-span-1">
@@ -65,6 +176,9 @@ export function Education({
                     type={"text"}
                     id={"schoolLocation"}
                     placeholder={"eg. Manchester, Uk"}
+                    onChange={handleSchoolLocation}
+                    value={schoolLocation}
+                    require={true}
                   />
                 </div>
                 <div className="col-span-2">
@@ -73,6 +187,9 @@ export function Education({
                     type={"text"}
                     id={"degree"}
                     placeholder={"eg. Bachelors of Science"}
+                    onChange={handleSchoolDegree}
+                    value={schoolDegree}
+                    require={true}
                   />
                 </div>
 
@@ -82,6 +199,9 @@ export function Education({
                     type={"text"}
                     id={"fieldStudied"}
                     placeholder={"eg. Mathematics And Statistics"}
+                    onChange={handleFieldStudied}
+                    value={fieldStudied}
+                    require={true}
                   />
                 </div>
                 <div className="col-span-2 md:col-span-1">
@@ -89,6 +209,9 @@ export function Education({
                     label={"Graduation Date / Expected Date of Grad"}
                     type={"month"}
                     id={"endDate"}
+                    onChange={handleGradDate}
+                    value={gradDate}
+                    require={true}
                   />
                 </div>
 
@@ -98,6 +221,8 @@ export function Education({
                     type={"textarea"}
                     id={"degreeDescription"}
                     placeholder={"Add your degree description here"}
+                    onChange={handleDegreeDescription}
+                    value={degreeDescription}
                   />
                 </div>
               </div>
@@ -112,42 +237,25 @@ export function Education({
               title={"Education History Summary"}
               subtitle={""}
               instruction={false}
-              handleBack={handleArray}
+              handleBack={() => {
+                setEducationMode("create");
+                handleBack();
+              }}
             />
             <div className="grid grid-col-1 gap-4 ">
-              <div className="education-list grid grid-col-1 gap-5 lg:gap-6">
-                <ExperienceCard
-                  cardTitle={"Education 1"}
-                  title="Bachelor of Science - Feb 2019"
-                  title2="Mathematics And Statistics"
-                  subtitle1="University of Port Harcourt"
-                  subtitle2="Rivers State, Nigeria"
-                  description=""
-                />
-                <ExperienceCard
-                  cardTitle={"Education 2"}
-                  title="Bachelor of Science - Feb 2019"
-                  title2="Mathematics And Statistics"
-                  subtitle1="University of Port Harcourt"
-                  subtitle2="Rivers State, Nigeria"
-                  description=""
-                />
-                <ExperienceCard
-                  cardTitle={"Education 3"}
-                  title="Bachelor of Science - Feb 2019"
-                  title2="Mathematics And Statistics"
-                  subtitle1="University of Port Harcourt"
-                  subtitle2="Rivers State, Nigeria"
-                  description=""
-                />
-              </div>
+              <ul className="education-list grid grid-col-1 gap-5 lg:gap-6">
+                {degreeList(degrees)}
+              </ul>
               <div className="justify-self-center">
                 <Button
                   type={"tertiary"}
                   label={"Add one more"}
                   preIcon={<i className="bi bi-plus"></i>}
                   postIcon={false}
-                  onClick={handleArray}
+                  onClick={() => {
+                    setEducationMode("create");
+                    handleArray();
+                  }}
                 />
               </div>
             </div>
@@ -195,7 +303,7 @@ export function Education({
               label={"Save & Next"}
               preIcon={false}
               postIcon={false}
-              onClick={handleArray}
+              onClick={handleSaveNewDegree}
             />
           </div>
         </footer>

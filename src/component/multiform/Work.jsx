@@ -46,6 +46,15 @@ export function WorkHistory({
     );
   };
 
+  const workData = {
+    jobTitle: jobTitle,
+    employer: employer,
+    jobLocation: jobLocation,
+    startDate: startDate,
+    endDate: endDate,
+    jobDescription: jobDescription,
+  };
+
   const handleSaveNewJob = () => {
     if (isValid()) {
       const uuid = generateUUID();
@@ -56,15 +65,6 @@ export function WorkHistory({
     } else {
       alert("Please fill in all the required fields.");
     }
-  };
-
-  const workData = {
-    jobTitle: jobTitle,
-    employer: employer,
-    jobLocation: jobLocation,
-    startDate: startDate,
-    endDate: endDate,
-    jobDescription: jobDescription,
   };
 
   function emptyWorkData() {
@@ -170,7 +170,7 @@ export function WorkHistory({
         subtitle2={`${job.startDate} - ${job.endDate}`}
         description={job.jobDescription.split("\n").map((line, index) => (
           <span key={index}>
-            {line}
+            • {line}
             <br />
           </span>
         ))}

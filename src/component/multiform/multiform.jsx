@@ -32,10 +32,10 @@ export function MultiForm({ closeMultiform, isOpen }) {
     jobs.push(job);
   };
   const addNewDegree = (degree) => {
-    jobs.push(degree);
+    degrees.push(degree);
   };
 
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(2);
 
   function handleNext() {
     currentStep === formSteps.length
@@ -137,7 +137,7 @@ export function MultiForm({ closeMultiform, isOpen }) {
         id="Forms"
         className="max-w-7xl mx-auto w-full px-4 md:px-6 lg:px-8 py-5"
       >
-        {displayActiveForm(currentStep, newResumeData, contact, jobs)}
+        {displayActiveForm(currentStep, newResumeData, contact, jobs, degrees)}
       </div>
     </section>
   );

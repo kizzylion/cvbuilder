@@ -49,10 +49,10 @@ export default function TemplatePaper({ isOpen, resumeData }) {
             <p className="text[1.125em] mb-[0.5em]">
               <span>{job.employer}</span>, <span>{job.jobLocation}</span>.
             </p>
-            <p className="">
+            <p className={`${job.jobDescription ? "block" : "hidden"}`}>
               {job.jobDescription.split("\n").map((line, index) => (
                 <span key={index}>
-                  {line}
+                  • {line}
                   <br />
                 </span>
               ))}
@@ -82,6 +82,53 @@ export default function TemplatePaper({ isOpen, resumeData }) {
       );
     }
   };
+  function degreeList(degArr) {
+    if (degArr.length) {
+      const listItems = degArr.map((degree) => (
+        <div key={degree.id} className="grid grid-cols-[1fr_3fr] gap-[2.5em]">
+          <div className="duration text-[1.125em]">{degree.gradDate}</div>
+          <div>
+            <h4 className="text-[1.3em] mb-[0.2em] font-semibold">
+              <span>{degree.schoolDegree}:</span>
+              <span>{degree.fieldStudied}</span>
+            </h4>
+            <p className=" text-[1.125em]">
+              <span>{degree.schoolName}</span> -{" "}
+              <span>{degree.schoolLocation}</span>.
+            </p>
+            <p
+              className={`${
+                degree.degreeDescription ? "block" : "hidden"
+              } text-[1em]`}
+            >
+              {degree.degreeDescription.split("\n").map((line, index) => (
+                <span key={index}>
+                  • {line}
+                  <br />
+                </span>
+              ))}
+            </p>
+          </div>
+        </div>
+      ));
+      return listItems;
+    } else {
+      return (
+        <div id="education1" className="grid grid-cols-[1fr_3fr] gap-[2.5em]">
+          <div className="duration text-[1.125em]">date - end</div>
+          <div>
+            <h4 className="text-[1.3em] mb-[0.2em] font-semibold">
+              <span>Bachelors of Science:</span>
+              <span>Physics Science</span>
+            </h4>
+            <p className=" text-[1.125em]">
+              <span>University of Nigeria</span> - <span>Nsukka, Nigeria</span>.
+            </p>
+          </div>
+        </div>
+      );
+    }
+  }
 
   return (
     <div
@@ -235,38 +282,7 @@ export default function TemplatePaper({ isOpen, resumeData }) {
             </div>
 
             <div id="eductionList" className="flex flex-col gap-[1em]">
-              <div
-                id="education1"
-                className="grid grid-cols-[1fr_3fr] gap-[2.5em]"
-              >
-                <div className="duration text-[1.125em]">date - end</div>
-                <div>
-                  <h4 className="text-[1.3em] mb-[0.2em] font-semibold">
-                    <span>Bachelors of Science:</span>
-                    <span>Physics Science</span>
-                  </h4>
-                  <p className=" text-[1.125em]">
-                    <span>University of Nigeria</span> -{" "}
-                    <span>Nsukka, Nigeria</span>.
-                  </p>
-                </div>
-              </div>
-              <div
-                id="education2"
-                className="grid grid-cols-[1fr_3fr] gap-[2.5em]"
-              >
-                <div className="duration text-[1.125em]">date - end</div>
-                <div>
-                  <h4 className="text-[1.3em] mb-[0.2em] font-semibold">
-                    <span>Bachelors of Science:</span>
-                    <span>Physics Science</span>
-                  </h4>
-                  <p className=" text-[1.125em]">
-                    <span>University of Nigeria</span> -{" "}
-                    <span>Nsukka, Nigeria</span>.
-                  </p>
-                </div>
-              </div>
+              {degreeList(resumeData.educationData)}
             </div>
           </div>
           <div id="accomplishment" className="pb-[0.75em]">
