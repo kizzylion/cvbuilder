@@ -8,6 +8,8 @@ export function ExperienceCard({
   subtitle1,
   subtitle2,
   description,
+  handleEdit,
+  handleDelete,
 }) {
   const [showMore, setShowMore] = useState(false);
 
@@ -23,10 +25,12 @@ export function ExperienceCard({
           <Button
             type={"tertiary"}
             preIcon={<i className="bi bi-pencil-fill font-bold"></i>}
+            onClick={handleEdit}
           />
           <Button
             type={"tertiary"}
             preIcon={<i className="bi bi-trash3-fill text-red-600"></i>}
+            onClick={handleDelete}
           />
         </div>
       </header>

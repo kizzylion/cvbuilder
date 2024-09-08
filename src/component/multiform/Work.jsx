@@ -12,17 +12,19 @@ export function WorkHistory({
   resumeData,
   jobs,
   handleNewJob,
+  setWorkHistory,
 }) {
   const [openTemplate, setOpenTemplate] = useState(false);
   const [openWorkArray, setOpenWorkArray] = useState(
     resumeData.workHistory.length > 0 ? true : false
   );
+  const [workMode, setWorkMode] = useState("create");
 
   const handlePreview = () => {
     setOpenTemplate(!openTemplate);
   };
   const handleWorkArray = () => {
-    setOpenWorkArray(!openWorkArray);
+    setOpenWorkArray(() => !openWorkArray);
   };
 
   const isValid = () => {
@@ -76,8 +78,8 @@ export function WorkHistory({
   console.log(resumeData);
   console.log(resumeData.workHistory);
 
-  let data = {};
-  data.workHistory = resumeData.workHistory;
+  // let data = {};
+  // data.workHistory = resumeData.workHistory;
 
   const handleJobtitle = (e) => {
     setJobTitle(e.target.value);
@@ -107,10 +109,6 @@ export function WorkHistory({
     setEndDate(getCurrentMonth());
   }, []);
 
-  useEffect(() => {
-    console.log(setStartDate);
-  }, [startDate]);
-
   const handleEndDate = (e) => {
     setEndDate(e.target.value);
   };
@@ -118,6 +116,49 @@ export function WorkHistory({
     // const htmlContent = textContent.replace(/\n/g, "<br>");
 
     setJobDescription(e.target.value);
+  };
+  const [editingItemId, setEditingItemId] = useState("");
+  const handleEdit = (job) => {
+    setWorkMode("edit");
+    handleWorkArray();
+    setEditingItemId(() => job.id);
+    setJobTitle(() => job.jobTitle);
+    setEmployer(() => job.employer);
+    setJobLocation(() => job.jobLocation);
+    setStartDate(() => job.startDate);
+    setEndDate(() => job.endDate);
+    setJobDescription(() => job.jobDescription);
+    console.log(job);
+  };
+
+  const handleDeleteJob = (toDeleteJob) => {
+    console.log("deleted");
+
+    // Filter out the job that needs to be deleted
+    const filteredJobs = jobs.filter((job) => job.id !== toDeleteJob.id);
+
+    // Update the work history state with the filtered array
+    setWorkHistory(filteredJobs);
+
+    // Set the work mode to "create"
+    setWorkMode("create");
+
+    // Check if there are any jobs left in the work history
+    if (filteredJobs.length === 0) {
+      // If no jobs left, call handleWorkArray
+      handleWorkArray();
+    }
+  };
+
+  const handleUpdateJob = (id, data) => {
+    console.log(workData);
+    const updatedJobs = jobs.map((job) =>
+      job.id === id ? { ...job, ...data } : job
+    );
+    setWorkHistory(updatedJobs);
+    setWorkMode("create");
+    handleWorkArray();
+    emptyWorkData();
   };
 
   function jobList(jobArr) {
@@ -135,6 +176,12 @@ export function WorkHistory({
             <br />
           </span>
         ))}
+        handleEdit={() => {
+          handleEdit(job);
+        }}
+        handleDelete={() => {
+          handleDeleteJob(job);
+        }}
       />
     ));
     return listItems;
@@ -238,38 +285,14 @@ export function WorkHistory({
               title={"Work History Summary"}
               subtitle={""}
               instruction={false}
-              handleBack={handleBack}
+              handleBack={() => {
+                setWorkMode("create");
+                handleBack();
+              }}
             />
             <div className="grid grid-col-1 gap-4 ">
               <ul className="work-list grid grid-col-1 gap-5 lg:gap-6">
                 {jobList(jobs)}
-                {/* <ExperienceCard
-                  cardTitle={"Work Experience 1"}
-                  title="Web Developer"
-                  title2="Microsoft"
-                  subtitle1="Lagos, Nigeria"
-                  subtitle2="August 2023 - August 2024"
-                  description="Wrote custom HTML and JavaScript for existing  websites. Developed user interfaces with modern JavaScript frameworks, HTML5, and CSS3.
-Wrote custom HTML and JavaScript for existing  websites. Developed user interfaces with modern JavaScript frameworks, HTML5, and CSS3."
-                />
-                <ExperienceCard
-                  cardTitle={"Work Experience 2"}
-                  title="Web Developer"
-                  title2="Microsoft"
-                  subtitle1="Lagos, Nigeria"
-                  subtitle2="August 2023 - August 2024"
-                  description="Wrote custom HTML and JavaScript for existing  websites. Developed user interfaces with modern JavaScript frameworks, HTML5, and CSS3.
-Wrote custom HTML and JavaScript for existing  websites. Developed user interfaces with modern JavaScript frameworks, HTML5, and CSS3."
-                />
-                <ExperienceCard
-                  cardTitle={"Work Experience 3"}
-                  title="Web Developer"
-                  title2="Microsoft"
-                  subtitle1="Lagos, Nigeria"
-                  subtitle2="August 2023 - August 2024"
-                  description="Wrote custom HTML and JavaScript for existing  websites. Developed user interfaces with modern JavaScript frameworks, HTML5, and CSS3.
-Wrote custom HTML and JavaScript for existing  websites. Developed user interfaces with modern JavaScript frameworks, HTML5, and CSS3."
-                /> */}
               </ul>
               <div className="justify-self-center">
                 <Button
@@ -277,7 +300,10 @@ Wrote custom HTML and JavaScript for existing  websites. Developed user interfac
                   label={"Add another position"}
                   preIcon={<i className="bi bi-plus"></i>}
                   postIcon={false}
-                  onClick={handleWorkArray}
+                  onClick={() => {
+                    setWorkMode("create");
+                    handleWorkArray();
+                  }}
                 />
               </div>
             </div>
@@ -307,7 +333,7 @@ Wrote custom HTML and JavaScript for existing  websites. Developed user interfac
           className={`work-form-action action-section w-full ${
             openTemplate ? "hidden" : "flex"
           } ${
-            openWorkArray ? "hidden" : "flex"
+            openWorkArray || workMode === "edit" ? "hidden" : "flex"
           } flex-col md:flex-row  justify-end gap-3 mt-auto py-4`}
         >
           <div className="order-1 md:order-0 ">
@@ -326,6 +352,35 @@ Wrote custom HTML and JavaScript for existing  websites. Developed user interfac
               preIcon={false}
               postIcon={false}
               onClick={handleSaveNewJob}
+            />
+          </div>
+        </footer>
+        <footer
+          className={`work-edit-action action-section w-full ${
+            openTemplate ? "hidden" : "flex"
+          } ${
+            openWorkArray || workMode === "create" ? "hidden" : "flex"
+          } flex-col md:flex-row  justify-end gap-3 mt-auto py-4`}
+        >
+          <div className="order-1 md:order-0 ">
+            {/* <Button
+              type={"secondary"}
+              label={"Preview"}
+              preIcon={false}
+              postIcon={false}
+              onClick={handlePreview}
+            /> */}
+          </div>
+          <div className="order-0 md:order-1">
+            <Button
+              type={"primary"}
+              label={"Update"}
+              preIcon={false}
+              postIcon={false}
+              onClick={() => {
+                console.log("updated");
+                handleUpdateJob(editingItemId, workData);
+              }}
             />
           </div>
         </footer>

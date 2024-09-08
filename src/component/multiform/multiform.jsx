@@ -69,6 +69,7 @@ export function MultiForm({ closeMultiform }) {
             handleNewJob={(data) => {
               addNewJob(data);
             }}
+            setWorkHistory={(data) => setWorkHistory(data)}
             handleNext={() => {
               setWorkHistory(jobs);
               handleNext();
