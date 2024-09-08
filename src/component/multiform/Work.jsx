@@ -5,6 +5,7 @@ import { Input } from "../utilities/input";
 import { Button } from "../utilities/button";
 import { MonthInput } from "../utilities/monthinput";
 import { ExperienceCard } from "../utilities/experience-card";
+import { generateUUID } from "../utilities/uuid";
 
 export function WorkHistory({
   handleBack,
@@ -40,7 +41,7 @@ export function WorkHistory({
 
   const handleSaveNewJob = () => {
     if (isValid()) {
-      const uuid = crypto.randomUUID();
+      const uuid = generateUUID();
       workData.id = uuid;
       handleNewJob(workData);
       emptyWorkData();
