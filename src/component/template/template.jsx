@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import "./template.scss";
+import { format } from "date-fns";
 
 export default function TemplatePaper({ isOpen, resumeData }) {
   const parentRef = useRef(null);
@@ -37,9 +38,10 @@ export default function TemplatePaper({ isOpen, resumeData }) {
     if (jobArr.length) {
       const listItems = jobArr.map((job) => (
         <div key={job.id} className="grid grid-cols-[1fr_3fr] gap-[2.5em]">
-          <div className="duration text-[0.75em]">
+          <div className="duration text-[1.125em]">
             <p>
-              {job.startDate} - {job.endDate}
+              {format(new Date(job.startDate), "MMM-yyyy")} - <br />
+              {format(new Date(job.endDate), "MMM-yyyy")}
             </p>
           </div>
           <div>
@@ -86,7 +88,9 @@ export default function TemplatePaper({ isOpen, resumeData }) {
     if (degArr.length) {
       const listItems = degArr.map((degree) => (
         <div key={degree.id} className="grid grid-cols-[1fr_3fr] gap-[2.5em]">
-          <div className="duration text-[1.125em]">{degree.gradDate}</div>
+          <div className="duration text-[1.125em]">
+            {format(new Date(degree.gradDate), "MMM-yyyy")}
+          </div>
           <div>
             <h4 className="text-[1.3em] mb-[0.2em] font-semibold">
               <span>{degree.schoolDegree}:</span>
@@ -192,7 +196,11 @@ export default function TemplatePaper({ isOpen, resumeData }) {
               <h4 className="font-semibold">Email</h4>
               <p className="flex w-full text-wrap box-border white-space:pre-wrap word-wrap:break-word ">
                 <a
-                  href="mailto:kztchm@gmail.com"
+                  href={
+                    resumeData.contactInfo.email
+                      ? `mailto:${resumeData.contactInfo.email}`
+                      : "mailto:kizitochukwu@example.com"
+                  }
                   className="text-indigo-200 block w-full text-wrap white-space:pre-wrap word-wrap:break-word"
                 >
                   {resumeData.contactInfo.email
@@ -202,7 +210,7 @@ export default function TemplatePaper({ isOpen, resumeData }) {
               </p>
             </div>
           </div>
-          <div id="weblinks" className="pb-[0.75em]">
+          <div id="weblinks" draggable="true" className="pb-[0.75em]">
             <div className="bg-indigo-900 px-[1.25em] py-[0.25em] mb-[0.5em]">
               <h3 className="text-[1.5em] font-semibold">Weblinks</h3>
             </div>
@@ -212,7 +220,7 @@ export default function TemplatePaper({ isOpen, resumeData }) {
               <a href="#">link3</a>
             </div>
           </div>
-          <div id="skills" className="pb-[0.75em]">
+          <div id="skills" draggable="true" className="pb-[0.75em]">
             <div className="bg-indigo-900 px-[1.25em] py-[0.25em] mb-[0.5em]">
               <h3 className="text-[1.5em] font-semibold">Skills</h3>
             </div>
@@ -224,7 +232,7 @@ export default function TemplatePaper({ isOpen, resumeData }) {
             </div>
           </div>
 
-          <div id="software" className="pb-[0.75em]">
+          <div id="software" draggable="true" className="pb-[0.75em]">
             <div className="bg-indigo-900 px-[1.25em] py-[0.25em] mb-[0.5em]">
               <h3 className="text-[1.5em] font-semibold">Software</h3>
             </div>
@@ -235,7 +243,7 @@ export default function TemplatePaper({ isOpen, resumeData }) {
               <p>tool 4</p>
             </div>
           </div>
-          <div id="languages" className="pb-[0.75em]">
+          <div id="languages" draggable="true" className="pb-[0.75em]">
             <div className="bg-indigo-900 px-[1.25em] py-[0.25em] mb-[0.5em]">
               <h3 className="text-[1.5em] font-semibold">Languages</h3>
             </div>
@@ -257,7 +265,7 @@ export default function TemplatePaper({ isOpen, resumeData }) {
               Fugit qui itaque autem eius!
             </p>
           </div>
-          <div id="work" className="pb-[0.75em]">
+          <div id="work" draggable="true" className="pb-[0.75em]">
             <div className="text-indigo-900 mb-[0.75em] border-y border-gray-300">
               <h3 className="text-[1.5em]  py-[0.25em] font-semibold">
                 Work History
@@ -274,7 +282,7 @@ export default function TemplatePaper({ isOpen, resumeData }) {
               </div>
             </div>
           </div>
-          <div id="education" className="pb-[0.75em]">
+          <div id="education" draggable="true" className="pb-[0.75em]">
             <div className="text-indigo-900 mb-[0.75em] border-y border-gray-300">
               <h3 className="text-[1.5em] py-[0.25em] font-semibold">
                 Education
@@ -285,7 +293,7 @@ export default function TemplatePaper({ isOpen, resumeData }) {
               {degreeList(resumeData.educationData)}
             </div>
           </div>
-          <div id="accomplishment" className="pb-[0.75em]">
+          <div id="accomplishment" draggable="true" className="pb-[0.75em]">
             <div className="text-indigo-900 mb-[0.75em] border-y border-gray-300">
               <h3 className="text-[1.5em] py-[0.25em] font-semibold">
                 Accomplishment
@@ -312,7 +320,7 @@ export default function TemplatePaper({ isOpen, resumeData }) {
               </div>
             </div>
           </div>
-          <div id="certificate" className="pb-[0.75em]">
+          <div id="certificate" draggable="true" className="pb-[0.75em]">
             <div className="text-indigo-900 mb-[0.75em] border-y border-gray-300">
               <h3 className="text-[1.5em] py-[0.25em] font-semibold">
                 Certificate

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ProgressBar } from "../progressbar/progressbar";
 import { ContactInfo } from "./ContactInfo";
 import { Education } from "./Education";
@@ -6,7 +6,7 @@ import { WorkHistory } from "./Work";
 import { Skill } from "./skill";
 import { Summary } from "./summary";
 
-export function MultiForm({ closeMultiform, isOpen }) {
+export function MultiForm({ closeMultiform }) {
   const [contactInfo, setContactInfo] = useState("");
   const [workHistory, setWorkHistory] = useState(new Array());
   const [educationData, setEducationData] = useState(new Array());

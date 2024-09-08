@@ -6,6 +6,7 @@ import { Button } from "../utilities/button";
 import { MonthInput } from "../utilities/monthinput";
 import { ExperienceCard } from "../utilities/experience-card";
 import { generateUUID } from "../utilities/uuid";
+import { format } from "date-fns";
 
 export function Education({
   handleBack,
@@ -120,7 +121,9 @@ export function Education({
         key={degree.id}
         cardTitle={`Degree ${index + 1}`}
         title={degree.schoolDegree}
-        title2={`${degree.gradDate}, ${degree.fieldStudied}`}
+        title2={`${format(new Date(degree.gradDate), "MMM-yyyy")}, ${
+          degree.fieldStudied
+        }`}
         subtitle1={degree.schoolName}
         subtitle2={`${degree.schoolLocation}`}
         description={degree.degreeDescription.split("\n").map((line, index) => (

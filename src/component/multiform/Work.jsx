@@ -6,6 +6,7 @@ import { Button } from "../utilities/button";
 import { MonthInput } from "../utilities/monthinput";
 import { ExperienceCard } from "../utilities/experience-card";
 import { generateUUID } from "../utilities/uuid";
+import { format } from "date-fns";
 
 export function WorkHistory({
   handleBack,
@@ -167,7 +168,10 @@ export function WorkHistory({
         title={job.jobTitle}
         title2={job.employer}
         subtitle1={job.jobLocation}
-        subtitle2={`${job.startDate} - ${job.endDate}`}
+        subtitle2={`${format(new Date(job.startDate), "MMM-yyyy")} - ${format(
+          new Date(job.endDate),
+          "MMM-yyyy"
+        )}`}
         description={job.jobDescription.split("\n").map((line, index) => (
           <span key={index}>
             • {line}
