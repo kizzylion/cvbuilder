@@ -115,6 +115,32 @@ export function Education({
   };
 
   degreeDescription;
+  const [editingItemId, setEditingItemId] = useState("");
+  const handleEdit = (degree) => {
+    setEducationMode("edit");
+    handleArray();
+    setEditingItemId(() => degree.id);
+    setSchoolName(() => degree.schoolName);
+    setSchoolLocation(() => degree.schoolLocation);
+    setSchoolDegree(() => degree.schoolDegree);
+    setFieldStudied(() => degree.fieldStudied);
+    setGradDate(() => degree.gradDate);
+    setDegreeDescription(() => degree.degreeDescription);
+
+    console.log(degree);
+  };
+
+  const handleUpdateDegree = (id, data) => {
+    console.log(degreeData);
+    const updatedJobs = degrees.map((degree) =>
+      degree.id === id ? { ...degree, ...data } : degree
+    );
+    setEducationData(updatedJobs);
+    setEducationMode("create");
+    handleArray();
+    emptyDegreeData();
+  };
+
   function degreeList(degArr) {
     const listItems = degArr.map((degree, index) => (
       <ExperienceCard
@@ -132,6 +158,9 @@ export function Education({
             <br />
           </span>
         ))}
+        handleEdit={() => {
+          handleEdit(degree);
+        }}
       />
     ));
     return listItems;
@@ -288,7 +317,7 @@ export function Education({
           className={`education-form-action action-section w-full ${
             openTemplate ? "hidden" : "flex"
           } ${
-            openEducationArray ? "hidden" : "flex"
+            openEducationArray || educationMode === "edit" ? "hidden" : "flex"
           } flex-col md:flex-row  justify-end gap-3 mt-auto py-4`}
         >
           <div className="order-1 md:order-0 ">
@@ -307,6 +336,36 @@ export function Education({
               preIcon={false}
               postIcon={false}
               onClick={handleSaveNewDegree}
+            />
+          </div>
+        </footer>
+
+        <footer
+          className={`education-edit-action action-section w-full ${
+            openTemplate ? "hidden" : "flex"
+          } ${
+            openEducationArray || educationMode === "create" ? "hidden" : "flex"
+          } flex-col md:flex-row  justify-end gap-3 mt-auto py-4`}
+        >
+          <div className="order-1 md:order-0 ">
+            {/* <Button
+              type={"secondary"}
+              label={"Preview"}
+              preIcon={false}
+              postIcon={false}
+              onClick={handlePreview}
+            /> */}
+          </div>
+          <div className="order-0 md:order-1">
+            <Button
+              type={"primary"}
+              label={"Update"}
+              preIcon={false}
+              postIcon={false}
+              onClick={() => {
+                console.log("updated");
+                handleUpdateDegree(editingItemId, degreeData);
+              }}
             />
           </div>
         </footer>
