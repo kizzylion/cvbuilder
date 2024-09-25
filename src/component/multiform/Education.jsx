@@ -130,6 +130,27 @@ export function Education({
     console.log(degree);
   };
 
+  const handleDeleteDegree = (toDeleteDegree) => {
+    console.log("Deleted");
+
+    // Filter out the degree that needs to be deleted
+    const filteredDegrees = degrees.filter(
+      (degree) => degree.id !== toDeleteDegree.id
+    );
+
+    // Update the work history state with the filtered array
+    setEducationData(filteredDegrees);
+
+    //Set the education mode to create
+    setEducationMode("create");
+
+    //check if there are any degrees left in the degree data
+    if (filteredDegrees.length === 0) {
+      //if no degrees left, call handleArray
+      handleArray();
+    }
+  };
+
   const handleUpdateDegree = (id, data) => {
     console.log(degreeData);
     const updatedJobs = degrees.map((degree) =>
@@ -160,6 +181,9 @@ export function Education({
         ))}
         handleEdit={() => {
           handleEdit(degree);
+        }}
+        handleDelete={() => {
+          handleDeleteDegree(degree);
         }}
       />
     ));

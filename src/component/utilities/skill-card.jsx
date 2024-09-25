@@ -1,7 +1,7 @@
 import { Button } from "./button";
 import { Input } from "./input";
 
-export function SkillCard({ cardTitle }) {
+export function SkillCard({ cardTitle, handleChange, value, handleDelete }) {
   return (
     <div className="skill-card flex flex-col bg-gray-50 rounded-xl border border-gray-400 overflow-hidden will-change-transform transition ease-out duration-200">
       <header className="flex justify-between items-center px-4 py-3 text-gray-900 border-b border-gray-400">
@@ -10,11 +10,17 @@ export function SkillCard({ cardTitle }) {
           <Button
             type={"tertiary"}
             preIcon={<i className="bi bi-trash3-fill text-red-600"></i>}
+            onClick={handleDelete}
           />
         </div>
       </header>
       <div className="card-body px-4 py-[14px] bg-white">
-        <Input type="text" placeholder="Enter skill here" />
+        <Input
+          type="text"
+          placeholder="Enter skill here"
+          value={value}
+          onChange={handleChange}
+        />
       </div>
     </div>
   );

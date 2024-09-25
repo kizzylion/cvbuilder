@@ -3,11 +3,22 @@ import { FormHeading } from "../utilities/formheading";
 import TemplatePaper from "../template/template";
 import { Button } from "../utilities/button";
 import { Input } from "../utilities/input";
-export function Summary({ handleBack, handleNext, resumeData }) {
+export function Summary({
+  handleBack,
+  handleNext,
+  resumeData,
+  summary,
+  setSummaryInfo,
+}) {
   const [openTemplate, setOpenTemplate] = useState(false);
 
   const handlePreview = () => {
     setOpenTemplate(!openTemplate);
+  };
+
+  const handleOnChange = (e) => {
+    console.log(e.target.value);
+    setSummaryInfo(e.target.value);
   };
 
   return (
@@ -29,7 +40,13 @@ export function Summary({ handleBack, handleNext, resumeData }) {
             />
             <div className="grid grid-col-1 gap-4 ">
               <div className="skill-list grid grid-col-1 gap-5 lg:gap-6">
-                <Input type="textarea" placeholder="Enter summary here" />
+                <Input
+                  type="textarea"
+                  placeholder="Enter summary here"
+                  value={summary}
+                  required={true}
+                  onChange={handleOnChange}
+                />
               </div>
             </div>
           </div>
@@ -70,7 +87,7 @@ export function Summary({ handleBack, handleNext, resumeData }) {
           <div className="order-0 md:order-1">
             <Button
               type={"primary"}
-              label={"Save & Next"}
+              label={"Finalize"}
               preIcon={false}
               postIcon={false}
               onClick={handleNext}

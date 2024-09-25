@@ -133,6 +133,20 @@ export default function TemplatePaper({ isOpen, resumeData }) {
       );
     }
   }
+  function skillList(skillArr) {
+    if (skillArr.length) {
+      if (skillList.length == 1 && !skillArr[0].name) {
+        return <p>Skill 1</p>;
+      } else {
+        const listItems = skillArr.map((skill) => (
+          <p key={skill.id}>{skill.name}</p>
+        ));
+        return listItems;
+      }
+    } else {
+      return <p>Skill 1</p>;
+    }
+  }
 
   return (
     <div
@@ -224,11 +238,8 @@ export default function TemplatePaper({ isOpen, resumeData }) {
             <div className="bg-indigo-900 px-[1.25em] py-[0.25em] mb-[0.5em]">
               <h3 className="text-[1.5em] font-semibold">Skills</h3>
             </div>
-            <div className="flex flex-col px-[1.25em] text-indigo-200 text-[1em] gap-[0.75em]">
-              <p>Skill 1</p>
-              <p>Skill 2</p>
-              <p>Skill 3</p>
-              <p>Skill 4</p>
+            <div className="skillList flex flex-col px-[1.25em] text-indigo-200 text-[1em] gap-[0.75em]">
+              {skillList(resumeData.skillData)}
             </div>
           </div>
 
@@ -258,12 +269,15 @@ export default function TemplatePaper({ isOpen, resumeData }) {
           className="flex flex-col text-gray-600 h-fit justify-start pt-[1em] pb-[1.5em] px-[1em]"
         >
           <div id="summary" className=" mb-[1em] text-[1em]">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae
-              veniam temporibus in, pariatur dignissimos error perspiciatis amet
-              labore officia, fugit quos doloribus libero laborum explicabo!
-              Fugit qui itaque autem eius!
-            </p>
+            {resumeData.summary && <p>{resumeData.summary}</p>}
+            {!resumeData.summary && (
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae
+                veniam temporibus in, pariatur dignissimos error perspiciatis
+                amet labore officia, fugit quos doloribus libero laborum
+                explicabo! Fugit qui itaque autem eius!
+              </p>
+            )}
           </div>
           <div id="work" draggable="true" className="pb-[0.75em]">
             <div className="text-indigo-900 mb-[0.75em] border-y border-gray-300">

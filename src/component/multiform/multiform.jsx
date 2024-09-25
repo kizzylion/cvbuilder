@@ -5,21 +5,48 @@ import { Education } from "./Education";
 import { WorkHistory } from "./Work";
 import { Skill } from "./skill";
 import { Summary } from "./summary";
+import { generateUUID } from "../utilities/uuid";
 
 export function MultiForm({ closeMultiform }) {
   const [contactInfo, setContactInfo] = useState("");
   const [workHistory, setWorkHistory] = useState(new Array());
   const [educationData, setEducationData] = useState(new Array());
+  const [skillData, setSkillData] = useState(new Array());
+  const [summaryInfo, setSummaryInfo] = useState("");
+
+  if (!skillData.length) {
+    let i = 0;
+    while (i < 1) {
+      setSkillData([...skillData, skillObject()]);
+      i++;
+    }
+  }
+
+  function skillObject() {
+    return {
+      id: generateUUID(),
+      name: "",
+    };
+  }
 
   const newResumeData = {
     contactInfo: contactInfo,
     workHistory: workHistory,
     educationData: educationData,
+    skillData: skillData,
+    summary: summaryInfo,
+  };
+
+  const summaryIsValid = () => {
+    console.log(summaryInfo);
+    return summaryInfo.length !== 0;
   };
 
   let contact = newResumeData.contactInfo;
   let jobs = newResumeData.workHistory;
   let degrees = newResumeData.educationData;
+  let skills = newResumeData.skillData;
+  let summary = newResumeData.summary;
 
   let formSteps = [
     "Contact Info",
@@ -33,6 +60,14 @@ export function MultiForm({ closeMultiform }) {
   };
   const addNewDegree = (degree) => {
     degrees.push(degree);
+  };
+
+  const addNewSkill = () => {
+    setSkillData([...skillData, skillObject()]);
+  };
+
+  const addNewSummary = (string) => {
+    setSummaryInfo(string);
   };
 
   const [currentStep, setCurrentStep] = useState(0);
@@ -57,7 +92,9 @@ export function MultiForm({ closeMultiform }) {
     data,
     tempContact,
     tempJobs,
-    tempDegrees
+    tempDegrees,
+    tempSkills,
+    tempSummary
   ) {
     switch (currentStep) {
       case 0:
@@ -111,16 +148,35 @@ export function MultiForm({ closeMultiform }) {
         return (
           <Skill
             handleBack={handleBack}
-            handleNext={handleNext}
             resumeData={data}
+            skills={tempSkills}
+            handleNewSkill={() => {
+              addNewSkill();
+            }}
+            setSkillData={(data) => setSkillData(data)}
+            handleNext={() => {
+              // setSkillData(skills);
+              handleNext();
+            }}
           />
         );
       case 4:
         return (
           <Summary
             handleBack={handleBack}
-            handleNext={handleNext}
             resumeData={data}
+            summary={tempSummary}
+            handleNewSummary={(data) => {
+              addNewSummary(data);
+            }}
+            setSummaryInfo={(data) => setSummaryInfo(data)}
+            handleNext={() => {
+              if (summaryIsValid()) {
+                handleNext();
+              } else {
+                alert("Summary cannot be empty");
+              }
+            }}
           />
         );
       default:
@@ -137,7 +193,15 @@ export function MultiForm({ closeMultiform }) {
         id="Forms"
         className="max-w-7xl mx-auto w-full px-4 md:px-6 lg:px-8 py-5"
       >
-        {displayActiveForm(currentStep, newResumeData, contact, jobs, degrees)}
+        {displayActiveForm(
+          currentStep,
+          newResumeData,
+          contact,
+          jobs,
+          degrees,
+          skills,
+          summary
+        )}
       </div>
     </section>
   );

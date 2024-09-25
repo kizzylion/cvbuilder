@@ -3,12 +3,60 @@ import { FormHeading } from "../utilities/formheading";
 import TemplatePaper from "../template/template";
 import { Button } from "../utilities/button";
 import { SkillCard } from "../utilities/skill-card";
-export function Skill({ handleBack, handleNext, resumeData }) {
+export function Skill({
+  handleBack,
+  handleNext,
+  resumeData,
+  skills,
+  handleNewSkill,
+  setSkillData,
+}) {
   const [openTemplate, setOpenTemplate] = useState(false);
 
   const handlePreview = () => {
     setOpenTemplate(!openTemplate);
   };
+
+  const handleOnChange = (e, toEditSkill) => {
+    console.log(e.target.value);
+
+    //get the skill by id that needs to be edited  and edit it, return the others as they are
+
+    const updateSkills = skills.map((skill) =>
+      skill.id == toEditSkill.id ? { ...skill, name: e.target.value } : skill
+    );
+    //Update the skill history state with he filtered array
+    setSkillData(() => updateSkills);
+  };
+
+  const handleDeleteSkill = (toDeleteSkill) => {
+    console.log("deleted");
+
+    //filter out the skill that needs to be deleted
+    const filteredSkills = skills.filter(
+      (skill) => skill.id !== toDeleteSkill.id
+    );
+
+    //Update the skill history state with he filtered array
+    setSkillData(filteredSkills);
+  };
+
+  function skillList(skillArr) {
+    const listItems = skillArr.map((skill, index) => (
+      <SkillCard
+        key={skill.id}
+        cardTitle={`Skill ${index + 1}`}
+        value={skill.name}
+        handleChange={(e) => {
+          handleOnChange(e, skill);
+        }}
+        handleDelete={() => {
+          handleDeleteSkill(skill);
+        }}
+      />
+    ));
+    return listItems;
+  }
 
   return (
     <div className="flex flex-col h-full justify-between relative">
@@ -27,30 +75,7 @@ export function Skill({ handleBack, handleNext, resumeData }) {
             />
             <div className="grid grid-col-1 gap-4 ">
               <div className="skill-list grid grid-col-1 gap-5 lg:gap-6">
-                <SkillCard
-                  cardTitle={"Skill 1"}
-                  title="Bachelor of Science - Feb 2019"
-                  title2="Mathematics And Statistics"
-                  subtitle1="University of Port Harcourt"
-                  subtitle2="Rivers State, Nigeria"
-                  description=""
-                />
-                <SkillCard
-                  cardTitle={"Skill 2"}
-                  title="Bachelor of Science - Feb 2019"
-                  title2="Mathematics And Statistics"
-                  subtitle1="University of Port Harcourt"
-                  subtitle2="Rivers State, Nigeria"
-                  description=""
-                />
-                <SkillCard
-                  cardTitle={"Skill 3"}
-                  title="Bachelor of Science - Feb 2019"
-                  title2="Mathematics And Statistics"
-                  subtitle1="University of Port Harcourt"
-                  subtitle2="Rivers State, Nigeria"
-                  description=""
-                />
+                {skillList(skills)}
               </div>
               <div className="justify-self-center">
                 <Button
@@ -58,6 +83,7 @@ export function Skill({ handleBack, handleNext, resumeData }) {
                   label={"Add one more"}
                   preIcon={<i className="bi bi-plus"></i>}
                   postIcon={false}
+                  onClick={handleNewSkill}
                 />
               </div>
             </div>
