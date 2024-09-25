@@ -4,7 +4,7 @@ import "./contactInfo.scss";
 import { Input } from "../utilities/input";
 import { Button } from "../utilities/button";
 import { useState, useEffect } from "react";
-
+import { track } from "@vercel/analytics";
 export function ContactInfo({
   isOpen,
   closeMultiform,
@@ -197,6 +197,7 @@ export function ContactInfo({
             preIcon={false}
             postIcon={false}
             onClick={() => {
+              track("Contact info Submitted");
               handleNextClick();
             }}
           />

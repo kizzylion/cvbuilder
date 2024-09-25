@@ -6,6 +6,7 @@ import { WorkHistory } from "./Work";
 import { Skill } from "./skill";
 import { Summary } from "./summary";
 import { generateUUID } from "../utilities/uuid";
+import { track } from "@vercel/analytics";
 
 export function MultiForm({ closeMultiform }) {
   const [contactInfo, setContactInfo] = useState("");
@@ -124,6 +125,7 @@ export function MultiForm({ closeMultiform }) {
             setWorkHistory={(data) => setWorkHistory(data)}
             handleNext={() => {
               setWorkHistory(jobs);
+              track("Work Info Submitted");
               handleNext();
             }}
           />
@@ -140,6 +142,7 @@ export function MultiForm({ closeMultiform }) {
             setEducationData={(data) => setEducationData(data)}
             handleNext={() => {
               setEducationData(degrees);
+              track("Education info Submitted");
               handleNext();
             }}
           />
@@ -156,6 +159,7 @@ export function MultiForm({ closeMultiform }) {
             setSkillData={(data) => setSkillData(data)}
             handleNext={() => {
               // setSkillData(skills);
+              track("Skill info Submitted");
               handleNext();
             }}
           />
@@ -173,6 +177,7 @@ export function MultiForm({ closeMultiform }) {
             handleNext={() => {
               if (summaryIsValid()) {
                 handleNext();
+                track("Summary info Submitted");
               } else {
                 alert("Summary cannot be empty");
               }
