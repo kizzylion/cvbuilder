@@ -409,7 +409,9 @@ export function WorkHistory({
               label={"Next: Education"}
               preIcon={false}
               postIcon={false}
-              onClick={handleNext}
+              onClick={() => {
+                handleNext();
+              }}
             />
           </div>
         </footer>

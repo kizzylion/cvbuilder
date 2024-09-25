@@ -196,7 +196,9 @@ export function ContactInfo({
             label={"Next: Work History"}
             preIcon={false}
             postIcon={false}
-            onClick={handleNextClick}
+            onClick={() => {
+              handleNextClick();
+            }}
           />
         </div>
       </footer>

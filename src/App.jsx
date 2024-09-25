@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./app.scss";
 import { SpeedInsights } from "@vercel/speed-insights/react";
-
+import { Analytics } from "@vercel/analytics/react";
 import Header from "./component/header/header";
 import { FilterSection } from "./component/filtersection/filtersection";
 
@@ -40,6 +40,7 @@ export default function App() {
   return (
     <div className={`App bg-gray-50 flex flex-col h-full `}>
       <SpeedInsights />
+      <Analytics />
       <div className={`${openMultiForm && "hidden md:block"}`}>
         <Header ref={headerRef} />
       </div>
