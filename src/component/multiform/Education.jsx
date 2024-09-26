@@ -331,7 +331,7 @@ export function Education({
               onClick={handlePreview}
             />
           </div>
-          <div className="preview aspect-[8.5/11] flex w-full lg:w-2/3 h-fit border border-gray-500 shadow-md shadow-gray-400 bg-gray-100 overflow-auto">
+          <div className="preview aspect-[8.5/11] flex w-full lg:w-5/12 h-fit border border-gray-500 shadow-md shadow-gray-400 bg-gray-100 overflow-auto">
             <TemplatePaper isOpen={openTemplate} resumeData={resumeData} />
           </div>
         </div>

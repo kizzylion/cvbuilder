@@ -103,7 +103,7 @@ export function Skill({
               onClick={handlePreview}
             />
           </div>
-          <div className="preview aspect-[8.5/11] flex w-full lg:w-2/3 h-fit border border-gray-500 shadow-md shadow-gray-400 bg-gray-100 overflow-auto">
+          <div className="preview aspect-[8.5/11] flex w-full lg:w-5/12 h-fit border border-gray-500 shadow-md shadow-gray-400 bg-gray-100 overflow-auto">
             <TemplatePaper isOpen={openTemplate} resumeData={resumeData} />
           </div>
         </div>
@@ -111,7 +111,9 @@ export function Skill({
       <div className="skill-action-section flex fixed w-full  mx-auto  bottom-0 right-0 px-4 md:px-6 lg:px-8  bg-gray-50 border-t border-gray-300">
         <footer
           className={`education-array-action action-section w-full 
-            flex flex-col md:flex-row  justify-end gap-3 mt-auto py-4`}
+            ${
+              openTemplate ? "hidden" : "flex"
+            } flex-col md:flex-row  justify-end gap-3 mt-auto py-4`}
         >
           <div className="order-1 md:order-0 ">
             <Button
