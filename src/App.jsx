@@ -114,15 +114,20 @@ export default function App() {
             className="resume-item flex w-full  text-base gap-4 py-4 "
           >
             <div className="w-full flex flex-col text-gray-900 md:flex-row gap-0.5 md:gap-4">
-              <p className="w-1/2 font-medium ">{`${resume.contactInfo.firstName}_${resume.contactInfo.lastName}_${itemId}`}</p>
+              <p
+                className="w-1/2 font-medium hover:text-amber-600 cursor-pointer "
+                onClick={() => handleOpenResume(resume.id)}
+              >{`${resume.contactInfo.firstName}_${resume.contactInfo.lastName}_${itemId}`}</p>
               <p className="w-1/2 text-gray-600 font-medium text-xs md:text-sm">
                 <span className="md:hidden">Created:</span>
                 {format(new Date(resume.dateCreated), "MMM d, yyyy")}
               </p>
             </div>
-            <p className="w-1/3 text-indigo-700">
-              <i className="bi bi-pencil-square"></i>
-            </p>
+            <div className="w-1/3 text-indigo-700">
+              <button type="click">
+                <i className="bi bi-pencil-square"></i>
+              </button>
+            </div>
           </article>
         );
       });
@@ -151,6 +156,17 @@ export default function App() {
     const now = new Date();
     const formattedDateTime = format(now, formatString);
     return formattedDateTime;
+  }
+
+  //function that gets resume by id
+  function getResumeById(arr, id) {
+    const resume = arr.find((resume) => resume.id === id);
+    return resume;
+  }
+
+  function handleOpenResume(id) {
+    setPreviewObject(() => getResumeById(resumes, id));
+    setDisplayPreview(() => true);
   }
 
   const handleAddResume = (newResume) => {
@@ -210,10 +226,10 @@ export default function App() {
             <div className="max-w-7xl mx-auto w-full h-full flex flex-col px-4 md:px-6 lg:px-8 pt-5 ">
               <div className="hidden md:flex justify-between mb-1 gap-4 w-full h-fit font-semibold uppercase text-base text-900 pl-8 py-3">
                 <div className="flex w-full gap-4 ">
-                  <p className="w-1/2">NAME</p>
-                  <p className="w-1/2">CREATION</p>
+                  <p className="w-1/2 text-xs">MY RESUMES</p>
+                  <p className="w-1/2 text-xs">CREATION</p>
                 </div>
-                <p className="w-1/3">ACTION</p>
+                <p className="w-1/3 text-xs">ACTIONs</p>
               </div>
               <div className="resume-list flex flex-col gap-0 w-full h-full py-3 pl-4 md:pl-8">
                 {resumeList(resumes)}
