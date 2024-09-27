@@ -35,7 +35,7 @@ export default function TemplatePaper({ isOpen, resumeData }) {
   }, []);
 
   const jobList = (jobArr) => {
-    if (jobArr.length) {
+    if (jobArr && jobArr.length) {
       const listItems = jobArr.map((job) => (
         <div key={job.id} className="grid grid-cols-[1fr_3fr] gap-[2.5em]">
           <div className="duration text-[1.125em]">
@@ -85,7 +85,7 @@ export default function TemplatePaper({ isOpen, resumeData }) {
     }
   };
   function degreeList(degArr) {
-    if (degArr.length) {
+    if (degArr && degArr.length) {
       const listItems = degArr.map((degree) => (
         <div key={degree.id} className="grid grid-cols-[1fr_3fr] gap-[2.5em]">
           <div className="duration text-[1.125em]">
@@ -122,8 +122,8 @@ export default function TemplatePaper({ isOpen, resumeData }) {
           <div className="duration text-[1.125em]">date - end</div>
           <div>
             <h4 className="text-[1.3em] mb-[0.2em] font-semibold">
-              <span>Bachelors of Science:</span>
-              <span>Physics Science</span>
+              <span>Bachelors in Accounting:</span>
+              <span>Accounting</span>
             </h4>
             <p className=" text-[1.125em]">
               <span>University of Nigeria</span> - <span>Nsukka, Nigeria</span>.
@@ -134,8 +134,8 @@ export default function TemplatePaper({ isOpen, resumeData }) {
     }
   }
   function skillList(skillArr) {
-    if (skillArr.length) {
-      if (skillList.length == 1 && !skillArr[0].name) {
+    if (skillArr && skillArr.length) {
+      if (skillArr.length === 1 && !skillArr[0].name) {
         return <p>Skill 1</p>;
       } else {
         const listItems = skillArr.map((skill) => (
@@ -166,14 +166,14 @@ export default function TemplatePaper({ isOpen, resumeData }) {
         >
           <div id="identity" className=" px-[1.25em] pb-[1.25em]">
             <h1 className="text-[150%] font-bold mb-[0.75em]">
-              {resumeData.contactInfo.firstName
+              {resumeData && resumeData.contactInfo.firstName
                 ? `${resumeData.contactInfo.firstName} ${resumeData.contactInfo.lastName}`
-                : "CHUKWUMA IHEANACHO"}
+                : "John Doe"}
             </h1>
             <h4 className="text-[1.1em]">
-              {resumeData.contactInfo.profession
+              {resumeData && resumeData.contactInfo.profession
                 ? `${resumeData.contactInfo.profession}`
-                : "Web Developer"}
+                : "Accountant"}
             </h4>
           </div>
           <div id="contact" className="pb-[0.75em] flex flex-col">
@@ -183,7 +183,7 @@ export default function TemplatePaper({ isOpen, resumeData }) {
             <div id="address" className="text-[1em] px-[1.125em] mb-[0.75em]">
               <h4 className="font-semibold">Address</h4>
               <p className="text-indigo-200">
-                {resumeData.contactInfo.location
+                {resumeData && resumeData.contactInfo.location
                   ? `${resumeData.contactInfo.location}, ${resumeData.contactInfo.zipCode}.`
                   : "Lagos, Nigeria. 123456"}
               </p>
@@ -197,7 +197,7 @@ export default function TemplatePaper({ isOpen, resumeData }) {
                 href="tel:+2349023456789"
                 className="text-indigo-200 flex flex-wrap text-wrap"
               >
-                {resumeData.contactInfo.phone
+                {resumeData && resumeData.contactInfo.phone
                   ? `${resumeData.contactInfo.phone}
                 `
                   : "+2349023456789"}
@@ -211,15 +211,15 @@ export default function TemplatePaper({ isOpen, resumeData }) {
               <p className="flex w-full text-wrap box-border white-space:pre-wrap word-wrap:break-word ">
                 <a
                   href={
-                    resumeData.contactInfo.email
+                    resumeData && resumeData.contactInfo.email
                       ? `mailto:${resumeData.contactInfo.email}`
-                      : "mailto:kizitochukwu@example.com"
+                      : "mailto:johndoe@example.com"
                   }
                   className="text-indigo-200 block w-full text-wrap white-space:pre-wrap word-wrap:break-word"
                 >
-                  {resumeData.contactInfo.email
+                  {resumeData && resumeData.contactInfo.email
                     ? `${resumeData.contactInfo.email}`
-                    : "kizitochukwu@example.com"}
+                    : "johndoe@example.com"}
                 </a>
               </p>
             </div>

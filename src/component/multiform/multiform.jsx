@@ -5,10 +5,11 @@ import { Education } from "./Education";
 import { WorkHistory } from "./Work";
 import { Skill } from "./skill";
 import { Summary } from "./summary";
+import AdditionalSection from "./additionalnfo";
 import { generateUUID } from "../utilities/uuid";
 import { track } from "@vercel/analytics";
 
-export function MultiForm({ closeMultiform }) {
+export function MultiForm({ closeMultiform, handleAddResume }) {
   const [contactInfo, setContactInfo] = useState("");
   const [workHistory, setWorkHistory] = useState(new Array());
   const [educationData, setEducationData] = useState(new Array());
@@ -29,6 +30,14 @@ export function MultiForm({ closeMultiform }) {
       name: "",
     };
   }
+
+  const [displayContact, setDisplayContact] = useState(true);
+  const [displayWork, setDisplayWork] = useState(true);
+  const [displayEducation, setDisplayEducation] = useState(true);
+  const [displaySkill, setDisplaySkill] = useState(true);
+  const [displaySummary, setDisplaySummary] = useState(true);
+  const [displayAccomplishment, setDisplayAccomplishment] = useState(false);
+  const [displaySoftware, setDisplaySoftware] = useState(false);
 
   const newResumeData = {
     contactInfo: contactInfo,
@@ -71,7 +80,7 @@ export function MultiForm({ closeMultiform }) {
     setSummaryInfo(string);
   };
 
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(6);
 
   function handleNext() {
     currentStep === formSteps.length
@@ -97,9 +106,15 @@ export function MultiForm({ closeMultiform }) {
     tempSkills,
     tempSummary
   ) {
-    switch (currentStep) {
-      case 0:
-        return (
+    let formSetting = [
+      {
+        name: "Contact info",
+        id: "contactInfo",
+        display: displayContact,
+        toggleDisplay: function () {
+          setDisplayContact((prev) => prev);
+        },
+        form: (
           <ContactInfo
             isOpen={true}
             resumeData={data}
@@ -112,9 +127,16 @@ export function MultiForm({ closeMultiform }) {
               handleNext();
             }}
           />
-        );
-      case 1:
-        return (
+        ),
+      },
+      {
+        name: "Work History",
+        id: "workHistory",
+        display: displayWork,
+        toggleDisplay: function () {
+          setDisplayWork((prev) => prev);
+        },
+        form: (
           <WorkHistory
             handleBack={handleBack}
             resumeData={data}
@@ -129,9 +151,16 @@ export function MultiForm({ closeMultiform }) {
               handleNext();
             }}
           />
-        );
-      case 2:
-        return (
+        ),
+      },
+      {
+        name: "Education",
+        id: "education",
+        display: displayEducation,
+        toggleDisplay: function () {
+          setDisplayEducation((prev) => prev);
+        },
+        form: (
           <Education
             handleBack={handleBack}
             resumeData={data}
@@ -146,9 +175,16 @@ export function MultiForm({ closeMultiform }) {
               handleNext();
             }}
           />
-        );
-      case 3:
-        return (
+        ),
+      },
+      {
+        name: "Skills",
+        id: "skill",
+        display: displaySkill,
+        toggleDisplay: function () {
+          setDisplaySkill((prev) => prev);
+        },
+        form: (
           <Skill
             handleBack={handleBack}
             resumeData={data}
@@ -163,9 +199,16 @@ export function MultiForm({ closeMultiform }) {
               handleNext();
             }}
           />
-        );
-      case 4:
-        return (
+        ),
+      },
+      {
+        name: "Summary",
+        id: "summary",
+        display: displaySummary,
+        toggleDisplay: function () {
+          setDisplayContact((prev) => prev);
+        },
+        form: (
           <Summary
             handleBack={handleBack}
             resumeData={data}
@@ -183,15 +226,99 @@ export function MultiForm({ closeMultiform }) {
               }
             }}
           />
-        );
+        ),
+      },
+      {
+        name: "Accomplishment",
+        id: "accomplishment",
+        display: displayAccomplishment,
+        toggleDisplay: function () {
+          setDisplayAccomplishment((prev) => !prev);
+        },
+        form: (
+          <Summary
+            handleBack={handleBack}
+            resumeData={data}
+            summary={tempSummary}
+            handleNewSummary={(data) => {
+              addNewSummary(data);
+            }}
+            setSummaryInfo={(data) => setSummaryInfo(data)}
+            handleNext={() => {
+              if (summaryIsValid()) {
+                handleNext();
+                track("Summary info Submitted");
+              } else {
+                alert("Summary cannot be empty");
+              }
+            }}
+          />
+        ),
+      },
+      {
+        name: "Software",
+        id: "software",
+        display: displaySoftware,
+        toggleDisplay: function () {
+          setDisplaySkill((prev) => prev);
+        },
+        form: (
+          <Skill
+            handleBack={handleBack}
+            resumeData={data}
+            skills={tempSkills}
+            handleNewSkill={() => {
+              addNewSkill();
+            }}
+            setSkillData={(data) => setSkillData(data)}
+            handleNext={() => {
+              // setSkillData(skills);
+              track("Skill info Submitted");
+              handleNext();
+            }}
+          />
+        ),
+      },
+    ];
+
+    let filterFalseDisplaySettings = formSetting.filter(
+      (item) => item.display === false
+    );
+    console.log(filterFalseDisplaySettings);
+
+    switch (currentStep) {
+      case 0:
+        return formSetting[0].form;
+      case 1:
+        return formSetting[1].form;
+      case 2:
+        return formSetting[2].form;
+      case 3:
+        return formSetting[3].form;
+      case 4:
+        return formSetting[4].form;
       default:
-        return <div className="text-red text-7xl font-bold">Invalid Step</div>;
+        return (
+          <div>
+            <AdditionalSection
+              handleBack={handleBack}
+              resumeData={data}
+              formSettings={filterFalseDisplaySettings}
+              handleFinalize={(arr, resume) => {
+                if (!arr.length) {
+                  console.log("saved");
+                  handleAddResume(resume);
+                }
+              }}
+            />
+          </div>
+        );
     }
   }
 
   return (
     <section>
-      <div className={`sticky z-40 top-0 md:top-14 border-b border-gray-400  `}>
+      <div className={`sticky z-40 top-0 md:top-14 border-b border-gray-400`}>
         <ProgressBar array={formSteps} currentStep={currentStep} />
       </div>
       <div
