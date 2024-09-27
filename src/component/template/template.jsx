@@ -150,7 +150,7 @@ export default function TemplatePaper({ isOpen, resumeData }) {
 
   return (
     <div
-      className={`docParent items-start aspect-[8.5/11]  w-full h-full ${
+      className={`docParent items-start aspect-[8.5/11] flex  w-full h-full ${
         isOpen ? setTimeout(scaleToFitParent, 500) : " "
       }  ease-out `}
       ref={parentRef}
@@ -158,7 +158,7 @@ export default function TemplatePaper({ isOpen, resumeData }) {
       <div
         id="previewPaper"
         ref={childRef}
-        className="grid grid-cols-[25%_75%] leading-normal mx-auto bg-indigo-50 mb-auto md:origin-[center_top] lg:origin-top-left leading-[150%]"
+        className="grid grid-cols-[25%_75%] min-h-full leading-normal mx-auto bg-indigo-50  md:origin-[center_top] lg:origin-top-left leading-[150%]"
       >
         <div
           id="paperAside"
@@ -286,11 +286,11 @@ export default function TemplatePaper({ isOpen, resumeData }) {
               </h3>
             </div>
             <div className="flex flex-col text-[1em] gap-[1em]">
-              <p>
+              {/* <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae
                 veniam temporibus in, pariatur dignissimos error perspiciatis
                 amet labore officia, fugit quos doloribus libero la
-              </p>
+              </p> */}
               <div id="workList" className="flex flex-col gap-[1em]">
                 {jobList(resumeData.workHistory)}
               </div>

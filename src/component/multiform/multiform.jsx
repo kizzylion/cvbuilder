@@ -80,7 +80,7 @@ export function MultiForm({ closeMultiform, handleAddResume }) {
     setSummaryInfo(string);
   };
 
-  const [currentStep, setCurrentStep] = useState(6);
+  const [currentStep, setCurrentStep] = useState(0);
 
   function handleNext() {
     currentStep === formSteps.length
@@ -206,7 +206,7 @@ export function MultiForm({ closeMultiform, handleAddResume }) {
         id: "summary",
         display: displaySummary,
         toggleDisplay: function () {
-          setDisplayContact((prev) => prev);
+          setDisplaySummary((prev) => prev);
         },
         form: (
           <Summary
