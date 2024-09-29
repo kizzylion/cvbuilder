@@ -12,6 +12,7 @@ import { WorkHistory } from "./component/multiform/Work";
 import { Button } from "./component/utilities/button";
 import { summary } from "framer-motion/client";
 import { generateUUID } from "./component/utilities/uuid";
+import displayRelativeDate from "./component/utilities/relativedate";
 
 export default function App() {
   const [resumes, setResumes] = useState([demoObject()]);
@@ -23,6 +24,7 @@ export default function App() {
     return {
       id: generateUUID(),
       dateCreated: new Date(),
+      fileName: "monday_tolu_20240929",
 
       contactInfo: {
         email: "",
@@ -107,25 +109,50 @@ export default function App() {
   function resumeList(arr) {
     if (arr.length) {
       const listItems = arr.map((resume) => {
-        const itemId = generateItemId(resume.dateCreated);
         return (
           <article
             key={resume.id}
             className="resume-item flex w-full  text-base gap-4 py-4 "
           >
-            <div className="w-full flex flex-col text-gray-900 md:flex-row gap-0.5 md:gap-4">
+            <div className="w-full flex flex-col text-gray-900 md:flex-row gap-0.5 md:gap-4 justify-center lg:items-center">
               <p
                 className="w-1/2 font-medium hover:text-amber-600 cursor-pointer "
                 onClick={() => handleOpenResume(resume.id)}
-              >{`${resume.contactInfo.firstName}_${resume.contactInfo.lastName}_${itemId}`}</p>
+              >
+                {resume.fileName}
+              </p>
               <p className="w-1/2 text-gray-600 font-medium text-xs md:text-sm">
                 <span className="md:hidden">Created:</span>
-                {format(new Date(resume.dateCreated), "MMM d, yyyy")}
+                {
+                  // format(new Date(resume.dateCreated), "MMM d, yyyy")
+                  displayRelativeDate(new Date(resume.dateCreated))
+                }
               </p>
             </div>
-            <div className="w-1/3 text-indigo-700">
-              <button type="click">
-                <i className="bi bi-pencil-square"></i>
+            <div className="w-1/3 flex gap-1 justify-center  text-indigo-700">
+              <button
+                type="click"
+                className="flex flex-col items-center text-indigo-500 py-2 px-3"
+                onClick={() => console.log("download")}
+              >
+                <i className="bi bi-printer-fill"></i>
+                <p className="text-xs font-bold">Print</p>
+              </button>
+              <button
+                type="click"
+                className="flex flex-col items-center text-indigo-500 py-2 px-3"
+                onClick={() => console.log("edit")}
+              >
+                <i className="bi bi-pencil-fill"></i>
+                <p className="text-xs font-bold">Edit</p>
+              </button>
+              <button
+                type="click"
+                className="flex flex-col items-center text-red-400 py-2 px-3"
+                onClick={() => handleDeleteResume(resume.id)}
+              >
+                <i className="bi bi-trash3-fill"></i>
+                <p className="text-xs font-bold">Delete</p>
               </button>
             </div>
           </article>
@@ -169,9 +196,17 @@ export default function App() {
     setDisplayPreview(() => true);
   }
 
+  // handle deleting of resume
+  function handleDeleteResume(id) {
+    setResumes((resumes) => resumes.filter((resume) => resume.id !== id));
+  }
+
   const handleAddResume = (newResume) => {
     newResume.dateCreated = generateDateTime("yyyy-MM-dd HH:mm:ss");
     newResume.id = generateUUID();
+    newResume.fileName = `${newResume.contactInfo.firstName}_${
+      newResume.contactInfo.lastName
+    }_${generateDateTime("yyyyMMddHHmmss")}`;
     setResumes((resumes) => [...resumes, newResume]);
     setPreviewObject(() => newResume);
     setDisplayPreview((prev) => !prev);
@@ -229,7 +264,7 @@ export default function App() {
                   <p className="w-1/2 text-xs">MY RESUMES</p>
                   <p className="w-1/2 text-xs">CREATION</p>
                 </div>
-                <p className="w-1/3 text-xs">ACTIONs</p>
+                <p className="w-1/3 text-xs text-center">ACTIONs</p>
               </div>
               <div className="resume-list flex flex-col gap-0 w-full h-full py-3 pl-4 md:pl-8">
                 {resumeList(resumes)}
