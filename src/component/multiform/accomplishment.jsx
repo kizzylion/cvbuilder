@@ -2,14 +2,15 @@ import { useState } from "react";
 import { FormHeading } from "../utilities/formheading";
 import TemplatePaper from "../template/template";
 import { Button } from "../utilities/button";
-import { SkillCard } from "../utilities/skill-card";
-export function Skill({
+import { Input } from "../utilities/input";
+export function Accomplishment({
   handleBack,
   handleNext,
   resumeData,
-  skills,
-  handleNewSkill,
-  setSkillData,
+  accomplishment,
+  setAccomplishmentInfo,
+  setDisplayAccomplishment,
+  addedForms,
 }) {
   const [openTemplate, setOpenTemplate] = useState(false);
 
@@ -17,74 +18,41 @@ export function Skill({
     setOpenTemplate(!openTemplate);
   };
 
-  const handleOnChange = (e, toEditSkill) => {
+  const handleOnChange = (e) => {
     console.log(e.target.value);
-
-    //get the skill by id that needs to be edited  and edit it, return the others as they are
-
-    const updateSkills = skills.map((skill) =>
-      skill.id == toEditSkill.id ? { ...skill, name: e.target.value } : skill
-    );
-    //Update the skill history state with he filtered array
-    setSkillData(() => updateSkills);
+    setAccomplishmentInfo(e.target.value);
+    if (e.target.value) {
+      setDisplayAccomplishment(true);
+    } else {
+      setDisplayAccomplishment(false);
+    }
   };
-
-  const handleDeleteSkill = (toDeleteSkill) => {
-    console.log("deleted");
-
-    //filter out the skill that needs to be deleted
-    const filteredSkills = skills.filter(
-      (skill) => skill.id !== toDeleteSkill.id
-    );
-
-    //Update the skill history state with he filtered array
-    setSkillData(filteredSkills);
-  };
-
-  function skillList(skillArr) {
-    const listItems = skillArr.map((skill, index) => (
-      <SkillCard
-        key={skill.id}
-        cardTitle={`Skill ${index + 1}`}
-        placeholder={"Enter Skill here"}
-        value={skill.name}
-        handleChange={(e) => {
-          handleOnChange(e, skill);
-        }}
-        handleDelete={() => {
-          handleDeleteSkill(skill);
-        }}
-      />
-    ));
-    return listItems;
-  }
 
   return (
     <div className="flex flex-col h-full justify-between relative">
-      <div className={`skills grid  grid-cols-1  gap-16 pb-20 `}>
+      <div
+        className={`Accomplishment-summary grid  grid-cols-1  gap-16 pb-20 md:pb-0 lg:pb-20 mb-5`}
+      >
         <div
           className={`content-with-array ${
             openTemplate ? "hidden" : " "
           } w-full h-fit`}
         >
-          <div className={`grid skill-array w-full lg:w-[58%]`}>
+          <div className={`grid summary w-full lg:w-[58%]`}>
             <FormHeading
-              title={"What skill would you like to highlight?"}
+              title={"Accomplishment"}
               subtitle={""}
               instruction={false}
               handleBack={handleBack}
             />
             <div className="grid grid-col-1 gap-4 ">
               <div className="skill-list grid grid-col-1 gap-5 lg:gap-6">
-                {skillList(skills)}
-              </div>
-              <div className="justify-self-center">
-                <Button
-                  type={"tertiary"}
-                  label={"Add one more"}
-                  preIcon={<i className="bi bi-plus"></i>}
-                  postIcon={false}
-                  onClick={handleNewSkill}
+                <Input
+                  type="textarea"
+                  placeholder="Enter Accomplishments here"
+                  value={accomplishment}
+                  required={true}
+                  onChange={handleOnChange}
                 />
               </div>
             </div>
@@ -128,7 +96,11 @@ export function Skill({
           <div className="order-0 md:order-1">
             <Button
               type={"primary"}
-              label={"Next: Professional"}
+              label={
+                (addedForms[addedForms.length - 1].name === "Accomplishment" &&
+                  "Finalize") ||
+                (addedForms.length > 0 && "Next")
+              }
               preIcon={false}
               postIcon={false}
               onClick={handleNext}

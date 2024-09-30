@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const Checkbox = ({ withText, handleToggle }) => {
-  const [checked, setChecked] = useState(false);
+const Checkbox = ({ withText, handleToggle, check }) => {
+  const [checked, setChecked] = useState(check);
 
   useEffect(() => {
     handleToggle(checked);

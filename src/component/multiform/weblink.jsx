@@ -3,13 +3,16 @@ import { FormHeading } from "../utilities/formheading";
 import TemplatePaper from "../template/template";
 import { Button } from "../utilities/button";
 import { SkillCard } from "../utilities/skill-card";
-export function Skill({
+
+export function WebLink({
   handleBack,
   handleNext,
   resumeData,
-  skills,
-  handleNewSkill,
-  setSkillData,
+  webLinks,
+  handleNewWebLink,
+  setWebLinkData,
+  setDisplayWebLink,
+  addedForms,
 }) {
   const [openTemplate, setOpenTemplate] = useState(false);
 
@@ -17,42 +20,45 @@ export function Skill({
     setOpenTemplate(!openTemplate);
   };
 
-  const handleOnChange = (e, toEditSkill) => {
+  const handleOnChange = (e, toEditLink) => {
     console.log(e.target.value);
 
     //get the skill by id that needs to be edited  and edit it, return the others as they are
 
-    const updateSkills = skills.map((skill) =>
-      skill.id == toEditSkill.id ? { ...skill, name: e.target.value } : skill
+    const updateWebLinks = webLinks.map((link) =>
+      link.id == toEditLink.id ? { ...link, name: e.target.value } : link
     );
-    //Update the skill history state with he filtered array
-    setSkillData(() => updateSkills);
+    // Update the software history state with he filtered array
+    setWebLinkData(() => updateWebLinks);
+    if (webLinks[0].name) {
+      setDisplayWebLink(true);
+    } else {
+      setDisplayWebLink(false);
+    }
   };
 
-  const handleDeleteSkill = (toDeleteSkill) => {
+  const handleDeleteLink = (toDeleteLink) => {
     console.log("deleted");
 
     //filter out the skill that needs to be deleted
-    const filteredSkills = skills.filter(
-      (skill) => skill.id !== toDeleteSkill.id
-    );
+    const filteredLink = webLinks.filter((link) => link.id !== toDeleteLink.id);
 
     //Update the skill history state with he filtered array
-    setSkillData(filteredSkills);
+    setWebLinkData(filteredLink);
   };
 
-  function skillList(skillArr) {
-    const listItems = skillArr.map((skill, index) => (
+  function linkList(linkArr) {
+    const listItems = linkArr.map((link, index) => (
       <SkillCard
-        key={skill.id}
-        cardTitle={`Skill ${index + 1}`}
-        placeholder={"Enter Skill here"}
-        value={skill.name}
+        key={link.id}
+        cardTitle={`Weblinks ${index + 1}`}
+        placeholder={"eg. https://example-link.com/"}
+        value={link.name}
         handleChange={(e) => {
-          handleOnChange(e, skill);
+          handleOnChange(e, link);
         }}
         handleDelete={() => {
-          handleDeleteSkill(skill);
+          handleDeleteLink(link);
         }}
       />
     ));
@@ -69,14 +75,16 @@ export function Skill({
         >
           <div className={`grid skill-array w-full lg:w-[58%]`}>
             <FormHeading
-              title={"What skill would you like to highlight?"}
-              subtitle={""}
+              title={"Website, Portfolio, Profiles?"}
+              subtitle={
+                "We recommend adding social networks like Linkedin to your header, to help employers get to know you better."
+              }
               instruction={false}
               handleBack={handleBack}
             />
             <div className="grid grid-col-1 gap-4 ">
               <div className="skill-list grid grid-col-1 gap-5 lg:gap-6">
-                {skillList(skills)}
+                {linkList(resumeData.webLinkData)}
               </div>
               <div className="justify-self-center">
                 <Button
@@ -84,7 +92,7 @@ export function Skill({
                   label={"Add one more"}
                   preIcon={<i className="bi bi-plus"></i>}
                   postIcon={false}
-                  onClick={handleNewSkill}
+                  onClick={handleNewWebLink}
                 />
               </div>
             </div>
@@ -128,7 +136,11 @@ export function Skill({
           <div className="order-0 md:order-1">
             <Button
               type={"primary"}
-              label={"Next: Professional"}
+              label={
+                (addedForms[addedForms.length - 1].name === "Weblink" &&
+                  "Finalize") ||
+                (addedForms.length > 0 && "Next")
+              }
               preIcon={false}
               postIcon={false}
               onClick={handleNext}

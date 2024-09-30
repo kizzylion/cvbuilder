@@ -3,13 +3,16 @@ import { FormHeading } from "../utilities/formheading";
 import TemplatePaper from "../template/template";
 import { Button } from "../utilities/button";
 import { SkillCard } from "../utilities/skill-card";
-export function Skill({
+
+export function Software({
   handleBack,
   handleNext,
   resumeData,
-  skills,
-  handleNewSkill,
-  setSkillData,
+  softwares,
+  handleNewSoftware,
+  setSoftwareData,
+  setDisplaySoftware,
+  addedForms,
 }) {
   const [openTemplate, setOpenTemplate] = useState(false);
 
@@ -17,36 +20,43 @@ export function Skill({
     setOpenTemplate(!openTemplate);
   };
 
-  const handleOnChange = (e, toEditSkill) => {
+  const handleOnChange = (e, toEditSoftware) => {
     console.log(e.target.value);
 
     //get the skill by id that needs to be edited  and edit it, return the others as they are
 
-    const updateSkills = skills.map((skill) =>
-      skill.id == toEditSkill.id ? { ...skill, name: e.target.value } : skill
+    const updateSoftwares = softwares.map((software) =>
+      software.id == toEditSoftware.id
+        ? { ...software, name: e.target.value }
+        : software
     );
-    //Update the skill history state with he filtered array
-    setSkillData(() => updateSkills);
+    // Update the software history state with he filtered array
+    setSoftwareData(() => updateSoftwares);
+    if (softwares[0].name) {
+      setDisplaySoftware(true);
+    } else {
+      setDisplaySoftware(false);
+    }
   };
 
   const handleDeleteSkill = (toDeleteSkill) => {
     console.log("deleted");
 
     //filter out the skill that needs to be deleted
-    const filteredSkills = skills.filter(
+    const filteredSoftware = softwares.filter(
       (skill) => skill.id !== toDeleteSkill.id
     );
 
     //Update the skill history state with he filtered array
-    setSkillData(filteredSkills);
+    setSoftwareData(filteredSoftware);
   };
 
   function skillList(skillArr) {
     const listItems = skillArr.map((skill, index) => (
       <SkillCard
         key={skill.id}
-        cardTitle={`Skill ${index + 1}`}
-        placeholder={"Enter Skill here"}
+        cardTitle={`Software ${index + 1}`}
+        placeholder={"Enter Software here"}
         value={skill.name}
         handleChange={(e) => {
           handleOnChange(e, skill);
@@ -76,7 +86,7 @@ export function Skill({
             />
             <div className="grid grid-col-1 gap-4 ">
               <div className="skill-list grid grid-col-1 gap-5 lg:gap-6">
-                {skillList(skills)}
+                {skillList(resumeData.softwareData)}
               </div>
               <div className="justify-self-center">
                 <Button
@@ -84,7 +94,7 @@ export function Skill({
                   label={"Add one more"}
                   preIcon={<i className="bi bi-plus"></i>}
                   postIcon={false}
-                  onClick={handleNewSkill}
+                  onClick={handleNewSoftware}
                 />
               </div>
             </div>
@@ -128,7 +138,11 @@ export function Skill({
           <div className="order-0 md:order-1">
             <Button
               type={"primary"}
-              label={"Next: Professional"}
+              label={
+                (addedForms[addedForms.length - 1].name === "Software" &&
+                  "Finalize") ||
+                (addedForms.length > 0 && "Next")
+              }
               preIcon={false}
               postIcon={false}
               onClick={handleNext}

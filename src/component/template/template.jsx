@@ -147,6 +147,36 @@ export default function TemplatePaper({ isOpen, resumeData }) {
       return <p>Skill 1</p>;
     }
   }
+  function softwareList(softwareArr) {
+    if (softwareArr && softwareArr.length) {
+      if (softwareArr.length === 1 && !softwareArr[0].name) {
+        return <p>Software 1</p>;
+      } else {
+        const listItems = softwareArr.map((software) => (
+          <p key={software.id}>{software.name}</p>
+        ));
+        return listItems;
+      }
+    } else {
+      return <p>Software 1</p>;
+    }
+  }
+  function webLinkList(webLinkArr) {
+    if (webLinkArr && webLinkArr.length) {
+      if (webLinkArr.length === 1 && !webLinkArr[0].name) {
+        return <p>Weblink 1</p>;
+      } else {
+        const listItems = webLinkArr.map((link) => (
+          <a key={link.id} href={link.name}>
+            {link.name}
+          </a>
+        ));
+        return listItems;
+      }
+    } else {
+      return <p>Weblink 1</p>;
+    }
+  }
 
   return (
     <div
@@ -229,9 +259,7 @@ export default function TemplatePaper({ isOpen, resumeData }) {
               <h3 className="text-[1.5em] font-semibold">Weblinks</h3>
             </div>
             <div className="flex flex-col px-[1.25em] text-indigo-200 text-[1em] gap-[0.75em]">
-              <a href="#">link1</a>
-              <a href="#">link2</a>
-              <a href="#">link3</a>
+              {webLinkList(resumeData.webLinkData)}
             </div>
           </div>
           <div id="skills" draggable="true" className="pb-[0.75em]">
@@ -247,11 +275,8 @@ export default function TemplatePaper({ isOpen, resumeData }) {
             <div className="bg-indigo-900 px-[1.25em] py-[0.25em] mb-[0.5em]">
               <h3 className="text-[1.5em] font-semibold">Software</h3>
             </div>
-            <div className="flex flex-col px-[1.25em] text-indigo-200 text-[1em] gap-[0.75em]">
-              <p>tool 1</p>
-              <p>tool 2</p>
-              <p>tool 3</p>
-              <p>tool 4</p>
+            <div className="softwarelist flex flex-col px-[1.25em] text-indigo-200 text-[1em] gap-[0.75em]">
+              {softwareList(resumeData.softwareData)}
             </div>
           </div>
           <div id="languages" draggable="true" className="pb-[0.75em]">
@@ -321,15 +346,17 @@ export default function TemplatePaper({ isOpen, resumeData }) {
               >
                 <div className="duration text-[1.25em]"></div>
                 <div>
-                  <p className=" text-[1em]">
-                    <li>
-                      Wrote custom HTML and JavaScript for existing websites.
-                    </li>
-                    <li>
-                      Developed user interfaces with modern JavaScript
-                      frameworks, HTML5, and CSS3.
-                    </li>
-                  </p>
+                  {resumeData.accomplishment && (
+                    <p>{resumeData.accomplishment}</p>
+                  )}
+                  {!resumeData.accomplishment && (
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Quae veniam temporibus in, pariatur dignissimos error
+                      perspiciatis amet labore officia, fugit quos doloribus
+                      libero laborum explicabo! Fugit qui itaque autem eius!
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

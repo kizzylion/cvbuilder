@@ -98,6 +98,14 @@ export default function App() {
       ],
       summary:
         "Highly motivated and experienced doctor with a passion for providing excellent care to patients. Experienced in a wide variety of medical settings, with particular expertise in diagnostics, primary care and emergency medicine. Skilled in using the latest technology to streamline patient care. Committed to delivering compassionate, personalized care to each and every patient",
+      accomplishment:
+        "Collaborated with team of [Number] in the development of [Project name].",
+      softwareData: [
+        { id: "74d0dae8-1d55-4252-8ddb-44bcc5049607", name: "HTML" },
+      ],
+      webLinkData: [
+        { id: "74d0dae8-1d55-4252-8ddb-ds4bcc5049607", name: "www.google.com" },
+      ],
     };
   }
   function generateItemId(date) {
