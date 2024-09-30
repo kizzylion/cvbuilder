@@ -308,10 +308,10 @@ export default function App() {
                     <a href="#">
                       <i className="bi bi-facebook"></i>
                     </a>
-                    <a href="#">
+                    <a href="https://x.com/chmkzt">
                       <i className="bi bi-twitter-x"></i>
                     </a>
-                    <a href="#">
+                    <a href="https://www.linkedin.com/in/chukwuma-iheanacho-957908155">
                       <i className="bi bi-linkedin"></i>
                     </a>
                   </div>
